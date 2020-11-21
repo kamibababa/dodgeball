@@ -1,4 +1,5 @@
-﻿using Dodgeball.Views;
+﻿using Dodgeball.Models;
+using Dodgeball.Views;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -8,6 +9,7 @@ namespace Dodgeball
     public class Dodgeball : Game
     {
         private GraphicsDeviceManager graphics;
+        private World world;
         private Renderer renderer;
 
         public Dodgeball()
@@ -26,7 +28,8 @@ namespace Dodgeball
 
         protected override void LoadContent()
         {
-            renderer = new Renderer(graphics);
+            world = new World();
+            renderer = new Renderer(graphics, world);
         }
 
         protected override void Update(GameTime gameTime)
