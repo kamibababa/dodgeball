@@ -4,12 +4,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Dodgeball
 {
-    public class Game1 : Game
+    public class Dodgeball : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        public Game1()
+        public Dodgeball()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
