@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dodgeball", "Dodgeball.csproj", "{9DDC384C-4350-4162-A36A-52C53A4723B6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9DDC384C-4350-4162-A36A-52C53A4723B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DDC384C-4350-4162-A36A-52C53A4723B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DDC384C-4350-4162-A36A-52C53A4723B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DDC384C-4350-4162-A36A-52C53A4723B6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {110224C2-4635-4DBD-9B32-00E914984372}
+	EndGlobalSection
+EndGlobal
