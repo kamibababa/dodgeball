@@ -28,8 +28,8 @@ namespace Dodgeball
 
         protected override void LoadContent()
         {
-            world = new World();
-            renderer = new Renderer(graphics, world);
+            world = new World(World.Day.Mon);
+            renderer = new Renderer(graphics, world, Content);
         }
 
         protected override void Update(GameTime gameTime)

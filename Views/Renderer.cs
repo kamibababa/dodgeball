@@ -1,5 +1,6 @@
 ﻿using Dodgeball.Models;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -16,13 +17,15 @@ namespace Dodgeball.Views
         private GraphicsDevice graphicsDevice;
         private World world;
         private RenderTarget2D renderTarget;
+        private TextureSet textures;
 
-        public Renderer(GraphicsDeviceManager graphics, World world)
+        public Renderer(GraphicsDeviceManager graphics, World world, ContentManager content)
         {
             graphicsDevice = graphics.GraphicsDevice;
             spriteBatch = new SpriteBatch(graphicsDevice);
             this.world = world;
             renderTarget = new RenderTarget2D(graphicsDevice, world.Width, world.Height);
+            textures = new TextureSet(content);
 
             // Set window size & title
             graphics.PreferredBackBufferWidth = WindowWidth;
@@ -36,13 +39,16 @@ namespace Dodgeball.Views
 
             // Draw to render target
             graphicsDevice.SetRenderTarget(renderTarget);
-            spriteBatch.Begin();
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp); // Do not linearly interpolate when stretching textures
+
+            // Background
+            spriteBatch.Draw(textures.Environments[world.Environment], new Rectangle(0, 0, world.Width, world.Height), Color.White);
 
             spriteBatch.End();
 
             // Draw render target to window
             graphicsDevice.SetRenderTarget(null);
-            spriteBatch.Begin();
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             spriteBatch.Draw(renderTarget, new Rectangle(0, 0, WindowWidth, WindowHeight), Color.White);
             spriteBatch.End();
         }
