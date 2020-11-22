@@ -66,7 +66,22 @@ namespace Dodgeball.Views
 
         private void drawGameChar(GameChar gameChar)
         {
-            drawEntity(gameChar, textures.GameChars[gameChar.AvatarType]);
+            if (gameChar.Side == GameChar.Team.Left)
+            {
+                drawEntity(gameChar, textures.GameChars[gameChar.AvatarType]);
+            }
+            else // Right
+            {
+                // Flip texture horizontally
+                spriteBatch.Draw(textures.GameChars[gameChar.AvatarType],
+                    gameChar.Bounds,
+                    null,
+                    Color.White,
+                    0,
+                    new Vector2(0, 0),
+                    SpriteEffects.FlipHorizontally,
+                    0);
+            }
         }
     }
 }
