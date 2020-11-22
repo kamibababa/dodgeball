@@ -44,6 +44,12 @@ namespace Dodgeball.Views
             // Background
             spriteBatch.Draw(textures.Environments[world.Environment], new Rectangle(0, 0, world.Width, world.Height), Color.White);
 
+            // GameChars
+            foreach (GameChar gameChar in world.AllGameChars)
+            {
+                drawGameChar(gameChar);
+            }
+
             spriteBatch.End();
 
             // Draw render target to window
@@ -51,6 +57,16 @@ namespace Dodgeball.Views
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             spriteBatch.Draw(renderTarget, new Rectangle(0, 0, WindowWidth, WindowHeight), Color.White);
             spriteBatch.End();
+        }
+
+        private void drawEntity(Entity entity, Texture2D texture)
+        {
+            spriteBatch.Draw(texture, entity.Bounds, Color.White);
+        }
+
+        private void drawGameChar(GameChar gameChar)
+        {
+            drawEntity(gameChar, textures.GameChars[gameChar.AvatarType]);
         }
     }
 }

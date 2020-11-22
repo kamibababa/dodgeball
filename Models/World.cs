@@ -21,9 +21,14 @@ namespace Dodgeball.Models
 
         public Day DayOfWeek;
         public Enviro Environment;
+        public GameChar Player;
+        public List<GameChar> AllGameChars;
+        public List<GameChar> Enemies;
 
         public World(Day day)
         {
+            DayOfWeek = day;
+
             // Set environment
             switch (day)
             {
@@ -41,6 +46,15 @@ namespace Dodgeball.Models
                     Environment = Enviro.Playground;
                     break;
             }
+
+            // Load GameChars
+            AllGameChars = new List<GameChar>();
+            Player = new GameChar(GameChar.Team.Left, GameChar.Avatar.Joey, this);
+            AllGameChars.Add(Player);
+            Enemies = new List<GameChar>();
+            GameChar enemy = new GameChar(GameChar.Team.Right, GameChar.Avatar.Max, this);
+            Enemies.Add(enemy);
+            AllGameChars.Add(enemy);
         }
     }
 }

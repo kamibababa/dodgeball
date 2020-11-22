@@ -19,7 +19,8 @@ namespace Dodgeball.Models
         private const int OffWall = 10;
 
         public Team Side;
-        public Avatar Type;
+        public Avatar AvatarType;
+        private Team left;
 
         public GameChar(Team team, Avatar avatar, World world)
         {
@@ -29,7 +30,7 @@ namespace Dodgeball.Models
             TopSpeed = 40;
 
             Side = team;
-            Type = avatar;
+            AvatarType = avatar;
 
             // Set position
             if (Side == Team.Left)
@@ -39,6 +40,11 @@ namespace Dodgeball.Models
             Position.Y = world.Height / 2;
 
             SetBounds();
+        }
+
+        public GameChar(Team left)
+        {
+            this.left = left;
         }
     }
 }
