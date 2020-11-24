@@ -27,7 +27,7 @@ namespace Dodgeball.Models
             // Class attributes
             Bounds.Width = 9;
             Bounds.Height = 20;
-            TopSpeed = 40;
+            TopSpeed = 55;
 
             Side = team;
             AvatarType = avatar;
