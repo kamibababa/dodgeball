@@ -11,6 +11,7 @@ namespace Dodgeball.Views
     {
         public Dictionary<World.Enviro, Texture2D> Environments;
         public Dictionary<GameChar.Avatar, Texture2D> GameChars;
+        public Texture2D BallAlive, BallDead;
 
         public TextureSet(ContentManager content)
         {
@@ -32,6 +33,9 @@ namespace Dodgeball.Views
             GameChars.Add(GameChar.Avatar.Emily, content.Load<Texture2D>("Images/GameChars/emily"));
             GameChars.Add(GameChar.Avatar.Li, content.Load<Texture2D>("Images/GameChars/li"));
             GameChars.Add(GameChar.Avatar.Omega, content.Load<Texture2D>("Images/GameChars/omega"));
+
+            BallAlive = content.Load<Texture2D>("Images/ballAlive");
+            BallDead = content.Load<Texture2D>("Images/ballDead");
         }
     }
 }
