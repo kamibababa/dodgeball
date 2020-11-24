@@ -18,6 +18,7 @@ namespace Dodgeball.Views
         private World world;
         private RenderTarget2D renderTarget;
         private TextureSet textures;
+        private Texture2D whiteRect; // Used for rendering rectangles
 
         public Renderer(GraphicsDeviceManager graphics, World world, ContentManager content)
         {
@@ -31,6 +32,9 @@ namespace Dodgeball.Views
             graphics.PreferredBackBufferWidth = WindowWidth;
             graphics.PreferredBackBufferHeight = WindowHeight;
             graphics.ApplyChanges();
+
+            whiteRect = new Texture2D(graphicsDevice, 1, 1);
+            whiteRect.SetData(new[] { Color.White });
         }
 
         public void Render()
@@ -63,6 +67,11 @@ namespace Dodgeball.Views
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             spriteBatch.Draw(renderTarget, new Rectangle(0, 0, WindowWidth, WindowHeight), Color.White);
             spriteBatch.End();
+        }
+
+        private void drawRect(Rectangle rect, Color color)
+        {
+            spriteBatch.Draw(whiteRect, rect, color);
         }
 
         private void drawBall(Ball ball)
