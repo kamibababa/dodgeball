@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -21,6 +22,7 @@ namespace Dodgeball.Models
 
         public Day DayOfWeek;
         public Enviro Environment;
+        public Dictionary<GameChar.Team, Rectangle> SideBounds;
         public GameChar Player;
         public List<GameChar> AllGameChars;
         public List<GameChar> Enemies;
@@ -29,6 +31,9 @@ namespace Dodgeball.Models
         {
             DayOfWeek = day;
 
+            SideBounds = new Dictionary<GameChar.Team, Rectangle>();
+            SideBounds.Add(GameChar.Team.Left, new Rectangle(0, 0, Width / 2, Height));
+            SideBounds.Add(GameChar.Team.Right, new Rectangle(Width / 2, 0, Width / 2, Height));
             // Set environment
             switch (day)
             {

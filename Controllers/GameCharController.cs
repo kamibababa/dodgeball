@@ -14,9 +14,38 @@ namespace Dodgeball.Controllers
 
         protected abstract void handleAttack(GameChar gameChar, float dt);
 
+        // Keeps GameChar bound to correct side
         protected override void boundsCheck(Entity entity)
         {
-            // TODO
+            Rectangle sideBounds = world.SideBounds[((GameChar)entity).Side];
+            
+            // Left wall
+            if (entity.Bounds.X < sideBounds.X)
+            {
+                entity.Bounds.X = sideBounds.X;
+                entity.Position.X = entity.Bounds.X + entity.Bounds.Width / 2;
+            }
+
+            // Right wall
+            else if (entity.Bounds.X + entity.Bounds.Width > sideBounds.X + sideBounds.Width)
+            {
+                entity.Bounds.X = sideBounds.X + sideBounds.Width - entity.Bounds.Width;
+                entity.Position.X = entity.Bounds.X + entity.Bounds.Width / 2;
+            }
+
+            // Top wall
+            if (entity.Bounds.Y < sideBounds.Y)
+            {
+                entity.Bounds.Y = sideBounds.Y;
+                entity.Position.Y = entity.Bounds.Y + entity.Bounds.Height / 2;
+            }
+
+            // Bottom wall
+            else if (entity.Bounds.Y + entity.Bounds.Height > sideBounds.Y + sideBounds.Height)
+            {
+                entity.Bounds.Y = sideBounds.Y + sideBounds.Height - entity.Bounds.Height;
+                entity.Position.Y = entity.Bounds.Y + entity.Bounds.Height / 2;
+            }
         }
 
         protected void throwBall(GameChar thrower, Vector2 throwHere)
