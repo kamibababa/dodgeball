@@ -17,8 +17,10 @@ namespace Dodgeball.Models
             Gym, Street, Field, Playground
         }
 
-        public int Width = 1024;
-        public int Height = 576;
+        public readonly int Width = 1024;
+        public readonly int Height = 576;
+
+        private const int BallsToSpawn = 3;
 
         public Day DayOfWeek;
         public Enviro Environment;
@@ -26,6 +28,7 @@ namespace Dodgeball.Models
         public GameChar Player;
         public List<GameChar> AllGameChars;
         public List<GameChar> Enemies;
+        public List<Ball> Balls;
 
         public World(Day day)
         {
@@ -34,6 +37,7 @@ namespace Dodgeball.Models
             SideBounds = new Dictionary<GameChar.Team, Rectangle>();
             SideBounds.Add(GameChar.Team.Left, new Rectangle(0, 0, Width / 2, Height));
             SideBounds.Add(GameChar.Team.Right, new Rectangle(Width / 2, 0, Width / 2, Height));
+
             // Set environment
             switch (day)
             {
@@ -60,6 +64,17 @@ namespace Dodgeball.Models
             GameChar enemy = new GameChar(GameChar.Team.Right, GameChar.Avatar.Max, this);
             Enemies.Add(enemy);
             AllGameChars.Add(enemy);
+
+            // Load balls
+            Balls = new List<Ball>();
+            for (int i = 0; i < BallsToSpawn; i++)
+            {
+                Balls.Add(new Ball(
+                    new Vector2(Width / 2, Height / (2 * BallsToSpawn) * (1 + 2 * i)),
+                    new Vector2(),
+                    false));
+            }
+
         }
     }
 }

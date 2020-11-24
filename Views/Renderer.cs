@@ -50,6 +50,12 @@ namespace Dodgeball.Views
                 drawGameChar(gameChar);
             }
 
+            // Balls
+            foreach (Ball ball in world.Balls)
+            {
+                drawBall(ball);
+            }
+
             spriteBatch.End();
 
             // Draw render target to window
@@ -57,6 +63,16 @@ namespace Dodgeball.Views
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             spriteBatch.Draw(renderTarget, new Rectangle(0, 0, WindowWidth, WindowHeight), Color.White);
             spriteBatch.End();
+        }
+
+        private void drawBall(Ball ball)
+        {
+            Texture2D texture;
+            if (ball.IsAlive)
+                texture = textures.BallAlive;
+            else
+                texture = textures.BallDead;
+            drawEntity(ball, texture);
         }
 
         private void drawEntity(Entity entity, Texture2D texture)
