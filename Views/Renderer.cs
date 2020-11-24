@@ -10,8 +10,8 @@ namespace Dodgeball.Views
 {
     class Renderer
     {
-        private const int WindowWidth = 1024;
-        private const int WindowHeight = 576;
+        private const int WindowWidth = 1280;
+        private const int WindowHeight = 720;
 
         private SpriteBatch spriteBatch;
         private GraphicsDevice graphicsDevice;
