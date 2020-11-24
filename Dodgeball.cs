@@ -11,6 +11,7 @@ namespace Dodgeball
     {
         private GraphicsDeviceManager graphics;
         private World world;
+        private ControllerSet controllers;
         private Renderer renderer;
 
         public Dodgeball()
@@ -30,12 +31,15 @@ namespace Dodgeball
         protected override void LoadContent()
         {
             world = new World(World.Day.Mon);
+            controllers = new ControllerSet(world);
             renderer = new Renderer(graphics, world, Content);
         }
 
         protected override void Update(GameTime gameTime)
         {
+            float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
             Input.Update();
+            controllers.Update(dt);
             base.Update(gameTime);
         }
 
