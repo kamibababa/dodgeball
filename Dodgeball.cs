@@ -1,4 +1,5 @@
-﻿using Dodgeball.Models;
+﻿using Dodgeball.Controllers;
+using Dodgeball.Models;
 using Dodgeball.Views;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -34,8 +35,7 @@ namespace Dodgeball
 
         protected override void Update(GameTime gameTime)
         {
-            // TODO: Add your update logic here
-
+            Input.Update();
             base.Update(gameTime);
         }
 
