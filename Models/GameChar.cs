@@ -16,18 +16,17 @@ namespace Dodgeball.Models
             Joey, Richard, Max, Eduardo, Dylan, Tim, Emily, Li, Omega
         }
 
-        private const int OffWall = 10;
+        private const int OffWall = 40;
 
         public Team Side;
         public Avatar AvatarType;
-        private Team left;
 
         public GameChar(Team team, Avatar avatar, World world)
         {
             // Class attributes
-            Bounds.Width = 9;
-            Bounds.Height = 20;
-            TopSpeed = 55;
+            Bounds.Width = 36;
+            Bounds.Height = 80;
+            TopSpeed = 220;
 
             Side = team;
             AvatarType = avatar;
@@ -40,11 +39,6 @@ namespace Dodgeball.Models
             Position.Y = world.Height / 2;
 
             SetBounds();
-        }
-
-        public GameChar(Team left)
-        {
-            this.left = left;
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Dodgeball.Models
             Gym, Street, Field, Playground
         }
 
-        public int Width = 256;
-        public int Height = 144;
+        public int Width = 1024;
+        public int Height = 576;
 
         public Day DayOfWeek;
         public Enviro Environment;
