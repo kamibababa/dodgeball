@@ -12,6 +12,9 @@ namespace Dodgeball.Views
     {
         private const int WindowWidth = 1280;
         private const int WindowHeight = 720;
+        private const float VeryLowHealth = .2f;
+        private const float LowHealth = .4f;
+        private const float MediumHealth = .6f;
 
         private SpriteBatch spriteBatch;
         private GraphicsDevice graphicsDevice;
@@ -60,6 +63,12 @@ namespace Dodgeball.Views
                 drawBall(ball);
             }
 
+            // UI
+            foreach (GameChar gameChar in world.AllGameChars)
+            {
+                drawHealthBar(gameChar);
+            }
+
             spriteBatch.End();
 
             // Draw render target to window
@@ -67,6 +76,28 @@ namespace Dodgeball.Views
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             spriteBatch.Draw(renderTarget, new Rectangle(0, 0, WindowWidth, WindowHeight), Color.White);
             spriteBatch.End();
+        }
+
+        private void drawHealthBar(GameChar gameChar)
+        {
+            // Set color
+            Color color;
+            float healthPercentage = (float) gameChar.Health / gameChar.MaxHealth;
+            if (healthPercentage <= VeryLowHealth)
+                color = Color.Red;
+            else if (healthPercentage <= LowHealth)
+                color = Color.Orange;
+            else if (healthPercentage <= MediumHealth)
+                color = Color.Yellow;
+            else
+                color = Color.Green;
+
+            Rectangle rect = new Rectangle(
+                UI.HealthBar.X + gameChar.Bounds.X,
+                UI.HealthBar.Y + gameChar.Bounds.Y,
+                (int)(UI.HealthBar.Width * healthPercentage),
+                UI.HealthBar.Height);
+            drawRect(rect, color);
         }
 
         private void drawRect(Rectangle rect, Color color)

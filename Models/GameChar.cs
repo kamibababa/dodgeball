@@ -20,6 +20,7 @@ namespace Dodgeball.Models
 
         public Team Side;
         public Avatar AvatarType;
+        public int Health, MaxHealth;
 
         public GameChar(Team team, Avatar avatar, World world)
         {
@@ -27,9 +28,11 @@ namespace Dodgeball.Models
             Bounds.Width = 36;
             Bounds.Height = 80;
             TopSpeed = 220;
+            MaxHealth = 100;
 
             Side = team;
             AvatarType = avatar;
+            Health = MaxHealth;
 
             // Set position
             if (Side == Team.Left)
