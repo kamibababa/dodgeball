@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -16,12 +17,18 @@ namespace Dodgeball.Models
             Joey, Richard, Max, Eduardo, Dylan, Tim, Emily, Li, Omega
         }
 
+        public const float LungeLength = 0.15f;
+        public const float LungeCooldownLength = 3.0f;
+        public const float LungeSpeed = 1200;
+
         private const int OffWall = 40;
 
         public Team Side;
         public Avatar AvatarType;
         public int Health, MaxHealth;
         public int BallsHeld, MaxBallsHeld;
+        public float LungeTimer, LungeCooldown;
+        public Vector2 LungeDirection;
 
         public GameChar(Team team, Avatar avatar, World world)
         {
