@@ -67,6 +67,7 @@ namespace Dodgeball.Views
             foreach (GameChar gameChar in world.AllGameChars)
             {
                 drawHealthBar(gameChar);
+                drawInventory(gameChar);
             }
 
             spriteBatch.End();
@@ -76,6 +77,27 @@ namespace Dodgeball.Views
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             spriteBatch.Draw(renderTarget, new Rectangle(0, 0, WindowWidth, WindowHeight), Color.White);
             spriteBatch.End();
+        }
+
+        private void drawInventory(GameChar gameChar)
+        {
+            for (int i = 0; i < gameChar.MaxBallsHeld; i++)
+            {
+                Color color;
+                if (gameChar.BallsHeld <= i)
+                    color = Color.Gray;
+                else
+                    color = Color.Red;
+
+                Rectangle inventory = gameChar.Side == GameChar.Team.Left ? UI.LeftInventory : UI.RightInventory;
+
+                Rectangle rect = new Rectangle(
+                    inventory.X + gameChar.Bounds.X,
+                    inventory.Y + gameChar.Bounds.Y + UI.InventorySpacing * i,
+                    inventory.Width,
+                    inventory.Height);
+                drawRect(rect, color);
+            }
         }
 
         private void drawHealthBar(GameChar gameChar)
