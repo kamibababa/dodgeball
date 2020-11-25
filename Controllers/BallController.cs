@@ -16,6 +16,7 @@ namespace Dodgeball.Controllers
                 Ball ball = world.Balls[i];
                 setVelocity(ball, dt);
                 setPosition(ball, dt);
+                ball.SetBounds();
                 boundsCheck(ball);
                 if (collisionDetect(ball))
                     world.Balls.RemoveAt(i);
