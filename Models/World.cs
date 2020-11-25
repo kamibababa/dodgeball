@@ -17,8 +17,8 @@ namespace Dodgeball.Models
             Gym, Street, Field, Playground
         }
 
-        public readonly int Width = 1024;
-        public readonly int Height = 576;
+        public const int Width = 1024;
+        public const int Height = 576;
 
         private const int BallsToSpawn = 3;
 

@@ -41,8 +41,8 @@ namespace Dodgeball.Models
             if (Side == Team.Left)
                 Position.X = OffWall;
             else // Right
-                Position.X = world.Width - OffWall;
-            Position.Y = world.Height / 2;
+                Position.X = World.Width - OffWall;
+            Position.Y = World.Height / 2;
 
             SetBounds();
         }

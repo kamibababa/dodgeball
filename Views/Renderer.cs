@@ -10,8 +10,9 @@ namespace Dodgeball.Views
 {
     class Renderer
     {
-        private const int WindowWidth = 1280;
-        private const int WindowHeight = 720;
+        public const int WindowWidth = 1280;
+        public const int WindowHeight = 720;
+
         private const float VeryLowHealth = .2f;
         private const float LowHealth = .4f;
         private const float MediumHealth = .6f;
@@ -28,7 +29,7 @@ namespace Dodgeball.Views
             graphicsDevice = graphics.GraphicsDevice;
             spriteBatch = new SpriteBatch(graphicsDevice);
             this.world = world;
-            renderTarget = new RenderTarget2D(graphicsDevice, world.Width, world.Height);
+            renderTarget = new RenderTarget2D(graphicsDevice, World.Width, World.Height);
             textures = new TextureSet(content);
 
             // Set window size & title
@@ -49,7 +50,7 @@ namespace Dodgeball.Views
             spriteBatch.Begin(samplerState: SamplerState.PointClamp); // Do not linearly interpolate when stretching textures
 
             // Background
-            spriteBatch.Draw(textures.Environments[world.Environment], new Rectangle(0, 0, world.Width, world.Height), Color.White);
+            spriteBatch.Draw(textures.Environments[world.Environment], new Rectangle(0, 0, World.Width, World.Height), Color.White);
 
             // GameChars
             foreach (GameChar gameChar in world.AllGameChars)
