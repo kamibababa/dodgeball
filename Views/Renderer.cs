@@ -69,6 +69,7 @@ namespace Dodgeball.Views
             {
                 drawHealthBar(gameChar);
                 drawInventory(gameChar);
+                drawLungeBar(gameChar);
             }
 
             spriteBatch.End();
@@ -78,6 +79,24 @@ namespace Dodgeball.Views
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             spriteBatch.Draw(renderTarget, new Rectangle(0, 0, WindowWidth, WindowHeight), Color.White);
             spriteBatch.End();
+        }
+
+        private void drawLungeBar(GameChar gameChar)
+        {
+            Color color;
+            if (gameChar.LungeCooldown > 0)
+                color = Color.Gray;
+            else
+                color = Color.White;
+
+            float lungePercentage = (GameChar.LungeCooldownLength - gameChar.LungeCooldown) / GameChar.LungeCooldownLength;
+            Rectangle lungeBar = gameChar.Side == GameChar.Team.Left ? UI.LeftLungeBar : UI.RightLungeBar;
+            Rectangle rect = new Rectangle(
+                lungeBar.X + gameChar.Bounds.X,
+                lungeBar.Y + gameChar.Bounds.Y + (int)(lungeBar.Height * (1.0 - lungePercentage)),
+                lungeBar.Width,
+                (int) (lungeBar.Height * lungePercentage));
+            drawRect(rect, color);
         }
 
         private void drawInventory(GameChar gameChar)

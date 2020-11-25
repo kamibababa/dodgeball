@@ -14,7 +14,7 @@ namespace Dodgeball.Models
             // Class attributes
             Bounds.Width = 32;
             Bounds.Height = 32;
-            TopSpeed = 400;
+            TopSpeed = 600;
 
             IsAlive = alive;
 

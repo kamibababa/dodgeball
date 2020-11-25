@@ -11,5 +11,7 @@ namespace Dodgeball.Views
         public static Rectangle LeftInventory = new Rectangle(-12, 24, 8, 8);
         public static Rectangle RightInventory = new Rectangle(40, 24, 8, 8);
         public static int InventorySpacing = -12;
+        public static Rectangle LeftLungeBar = new Rectangle(-12, 36, 8, 24);
+        public static Rectangle RightLungeBar = new Rectangle(40, 36, 8, 24);
     }
 }
