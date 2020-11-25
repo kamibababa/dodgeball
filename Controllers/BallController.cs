@@ -1,7 +1,4 @@
 ﻿using Dodgeball.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Dodgeball.Controllers
 {
@@ -13,19 +10,43 @@ namespace Dodgeball.Controllers
 
         public override void Update(float dt)
         {
-            foreach (Ball ball in world.Balls)
+            // Iterate backwards to allow for deletion
+            for (int i = world.Balls.Count - 1; i >= 0; i--)
             {
+                Ball ball = world.Balls[i];
                 setVelocity(ball, dt);
                 setPosition(ball, dt);
                 boundsCheck(ball);
-                collisionDetect(ball);
+                if (collisionDetect(ball))
+                    world.Balls.RemoveAt(i);
             }
         }
 
         // Handle collisions between ball and GameChars
-        private void collisionDetect(Ball ball)
+        // Returns true if ball should be removed
+        private bool collisionDetect(Ball ball)
         {
-            // TODO
+            foreach (GameChar gameChar in world.AllGameChars)
+            {
+                if (ball.Bounds.Intersects(gameChar.Bounds))
+                {
+                    // TODO Take damage from alive balls
+                    if (ball.IsAlive)
+                    {
+
+                    }
+                    // Pickup dead balls
+                    else
+                    {
+                        if (gameChar.BallsHeld < gameChar.MaxBallsHeld)
+                        {
+                            gameChar.BallsHeld++;
+                            return true; // Immediate return prevents multiple gameChars picking up the same ball on a single frame
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         protected override void boundsCheck(Entity entity)
