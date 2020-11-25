@@ -12,6 +12,7 @@ namespace Dodgeball.Controllers
     {
         public static bool Throw = false, Lunge = false;
         public static Vector2 ThrowHere, LungeHere;
+
         private static KeyboardState keyboardState, lastKeyboardState;
         private static MouseState mouseState, lastMouseState;
 

@@ -14,6 +14,7 @@ namespace Dodgeball.Controllers
 
         public override void Update(float dt)
         {
+            handleAttack(world.Player, dt);
             setVelocity(world.Player, dt);
             setPosition(world.Player, dt);
             world.Player.SetBounds();
@@ -22,7 +23,15 @@ namespace Dodgeball.Controllers
 
         protected override void handleAttack(GameChar gameChar, float dt)
         {
-            // TODO
+            if (Input.Throw)
+            {
+                Input.Throw = false;
+                if (gameChar.BallsHeld > 0)
+                {
+                    gameChar.BallsHeld--;
+                    throwBall(gameChar, Input.ThrowHere);
+                }
+            }
         }
 
         protected override void setVelocity(Entity entity, float dt)

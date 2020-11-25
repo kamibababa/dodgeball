@@ -8,6 +8,8 @@ namespace Dodgeball.Controllers
 {
     abstract class GameCharController : EntityController
     {
+        protected int BallSpawnDist = 40;
+
         protected GameCharController(World world) : base(world)
         {
         }
@@ -50,7 +52,17 @@ namespace Dodgeball.Controllers
 
         protected void throwBall(GameChar thrower, Vector2 throwHere)
         {
-            // TODO
+            Vector2 pos = new Vector2(thrower.Position.X, thrower.Position.Y);
+            if (thrower.Side == GameChar.Team.Left)
+                pos.X += BallSpawnDist;
+            else // Right
+                pos.X -= BallSpawnDist;
+
+            Vector2 dir = Vector2.Subtract(throwHere, thrower.Position);
+            if (dir.LengthSquared() > 0) // Prevents divide-by-zero crash if player clicks exactly on gameChar position
+                dir = Vector2.Normalize(dir);
+
+            world.Balls.Add(new Ball(pos, dir, true));
         }
     }
 }
