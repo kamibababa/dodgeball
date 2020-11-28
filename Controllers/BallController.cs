@@ -8,6 +8,8 @@ namespace Dodgeball.Controllers
     {
         private const float Deceleration = 50.0f;
         private const int BouncesToKill = 3;
+        private const float RecoilDist = 100.0f;
+        private const int Damage = 10;
 
         public BallController(World world) : base(world)
         {
@@ -44,11 +46,32 @@ namespace Dodgeball.Controllers
             {
                 if (ball.Bounds.Intersects(gameChar.Bounds))
                 {
-                    // TODO Take damage from alive balls
+                    // Take damage from alive balls
                     if (ball.IsAlive)
                     {
+                        gameChar.Health -= 10;
+                        ball.IsAlive = false;
 
+                        // Recoil gameChar
+                        Vector2 recoil = new Vector2(ball.Velocity.X, ball.Velocity.Y);
+                        if (recoil.LengthSquared() > 0)
+                            recoil = Vector2.Multiply(Vector2.Normalize(recoil), RecoilDist);
+                        gameChar.Position = Vector2.Add(gameChar.Position, recoil);
+                        gameChar.SetBounds();
+
+                        // Reverse ball direction
+                        if (ball.Position.X < gameChar.Bounds.X || 
+                            ball.Position.X > gameChar.Bounds.X + gameChar.Bounds.Width)
+                        {
+                            ball.Velocity.X *= -1;
+                        }
+                        if (ball.Position.Y < gameChar.Bounds.Y ||
+                            ball.Position.Y > gameChar.Bounds.Y + gameChar.Bounds.Height)
+                        {
+                            ball.Velocity.Y *= -1;
+                        }
                     }
+
                     // Pickup dead balls
                     else
                     {

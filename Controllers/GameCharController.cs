@@ -8,7 +8,7 @@ namespace Dodgeball.Controllers
 {
     abstract class GameCharController : EntityController
     {
-        protected int BallSpawnDist = 40;
+        protected const int BallSpawnDist = 40;
 
         protected GameCharController(World world) : base(world)
         {
