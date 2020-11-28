@@ -1,4 +1,5 @@
 ﻿using Dodgeball.Models;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -85,7 +86,33 @@ namespace Dodgeball.Controllers
 
         private void dodgeMove(Entity entity)
         {
-            // TODO
+            // Find farthest along alive ball
+            Ball oncomingBall = null;
+            float farthestX = 0;
+            foreach (Ball ball in world.Balls)
+            {
+                if (ball.IsAlive &&
+                    ball.Velocity.X > 0 &&
+                    ball.Position.X > farthestX)
+                {
+                    oncomingBall = ball;
+                    farthestX = oncomingBall.Position.X;
+                }
+            }
+
+            entity.Velocity = new Vector2();
+            if (oncomingBall != null)
+            {
+                entity.Velocity.X = 1;
+                // Determines which vertical half of the map the ball will be at and moves away from it
+                float t = (entity.Position.X - oncomingBall.Position.X) / oncomingBall.Velocity.X;
+                float futureY = oncomingBall.Position.Y + oncomingBall.Velocity.Y * t;
+                if (futureY < World.Height / 2) // Ball will be in bottom half
+                    entity.Velocity.Y = 1;
+                else // Ball will be in top half
+                    entity.Velocity.Y = -1;
+                entity.Velocity = Vector2.Multiply(Vector2.Normalize(entity.Velocity), entity.TopSpeed);
+            }
         }
 
         private void pickupMove(Entity entity)
