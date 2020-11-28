@@ -13,6 +13,8 @@ namespace Dodgeball.Controllers
             Dodge, Pickup, Attack, Avoid
         }
 
+        private const int AttackFollowRange = 100;
+
         private AI ai;
 
         public EnemyController(World world) : base(world)
@@ -141,7 +143,22 @@ namespace Dodgeball.Controllers
 
         private void attackMove(Entity entity)
         {
-            // TODO
+            entity.Velocity = new Vector2();
+
+            // Move forward if player has no balls
+            if (world.Player.BallsHeld == 0)
+                entity.Velocity.X = -1;
+
+            // Follow player
+            // Player is below enemy
+            if (world.Player.Position.Y - entity.Position.Y >= AttackFollowRange)
+                entity.Velocity.Y = 1;
+            // Player is above enemy
+            else if (world.Player.Position.Y - entity.Position.Y <= -AttackFollowRange)
+                entity.Velocity.Y = -1;
+
+            if (entity.Velocity.LengthSquared() > 0)
+                entity.Velocity = Vector2.Multiply(Vector2.Normalize(entity.Velocity), entity.TopSpeed);
         }
 
         private void avoidMove(Entity entity)
