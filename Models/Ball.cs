@@ -8,6 +8,7 @@ namespace Dodgeball.Models
     class Ball : Entity
     {
         public bool IsAlive;
+        public int Bounces;
 
         public Ball(Vector2 position, Vector2 direction, bool alive)
         {
@@ -17,6 +18,7 @@ namespace Dodgeball.Models
             TopSpeed = 600;
 
             IsAlive = alive;
+            Bounces = 0;
 
             Position.X = position.X;
             Position.Y = position.Y;

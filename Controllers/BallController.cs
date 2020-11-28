@@ -1,11 +1,13 @@
 ﻿using Dodgeball.Models;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Dodgeball.Controllers
 {
     class BallController : EntityController
     {
         private const float Deceleration = 50.0f;
+        private const int BouncesToKill = 3;
 
         public BallController(World world) : base(world)
         {
@@ -17,6 +19,7 @@ namespace Dodgeball.Controllers
             for (int i = world.Balls.Count - 1; i >= 0; i--)
             {
                 Ball ball = world.Balls[i];
+                handleBounces(ball);
                 setVelocity(ball, dt);
                 setPosition(ball, dt);
                 ball.SetBounds();
@@ -24,6 +27,13 @@ namespace Dodgeball.Controllers
                 if (collisionDetect(ball))
                     world.Balls.RemoveAt(i);
             }
+        }
+
+        // Checks if balls should be killed after too many bounces
+        private void handleBounces(Ball ball)
+        {
+            if (ball.Bounces >= BouncesToKill)
+                ball.IsAlive = false;
         }
 
         // Handle collisions between ball and GameChars
@@ -61,6 +71,7 @@ namespace Dodgeball.Controllers
                 entity.Bounds.X = 0;
                 entity.Position.X = entity.Bounds.X + entity.Bounds.Width / 2;
                 entity.Velocity.X *= -1;
+                ((Ball)entity).Bounces++;
             }
 
             // Right wall
@@ -69,6 +80,7 @@ namespace Dodgeball.Controllers
                 entity.Bounds.X = World.Width - entity.Bounds.Width;
                 entity.Position.X = entity.Bounds.X + entity.Bounds.Width / 2;
                 entity.Velocity.X *= -1;
+                ((Ball)entity).Bounces++;
             }
 
             // Bottom wall
@@ -77,6 +89,7 @@ namespace Dodgeball.Controllers
                 entity.Bounds.Y = 0;
                 entity.Position.Y = entity.Bounds.Y + entity.Bounds.Height / 2;
                 entity.Velocity.Y *= -1;
+                ((Ball)entity).Bounces++;
             }
 
             // Top wall
@@ -85,6 +98,7 @@ namespace Dodgeball.Controllers
                 entity.Bounds.Y = World.Height - entity.Bounds.Height;
                 entity.Position.Y = entity.Bounds.Y + entity.Bounds.Height / 2;
                 entity.Velocity.Y *= -1;
+                ((Ball)entity).Bounces++;
             }
         }
 
