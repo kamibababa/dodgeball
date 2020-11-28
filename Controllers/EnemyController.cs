@@ -117,7 +117,26 @@ namespace Dodgeball.Controllers
 
         private void pickupMove(Entity entity)
         {
-            // TODO
+            // Find nearest dead ball
+            Ball nearestBall = null;
+            float shortestDist = Single.MaxValue;
+            foreach (Ball ball in world.Balls)
+            {
+                if (!ball.IsAlive &&
+                    Vector2.DistanceSquared(ball.Position, entity.Position) < shortestDist)
+                {
+                    nearestBall = ball;
+                    shortestDist = Vector2.DistanceSquared(ball.Position, entity.Position);
+                }
+            }
+
+            entity.Velocity = new Vector2();
+            if (nearestBall != null)
+            {
+                entity.Velocity = Vector2.Subtract(nearestBall.Position, entity.Position);
+                if (entity.Velocity.LengthSquared() > 0)
+                    entity.Velocity = Vector2.Multiply(Vector2.Normalize(entity.Velocity), entity.TopSpeed);
+            }
         }
 
         private void attackMove(Entity entity)
