@@ -1,9 +1,12 @@
 ﻿using Dodgeball.Models;
+using Microsoft.Xna.Framework;
 
 namespace Dodgeball.Controllers
 {
     class BallController : EntityController
     {
+        private const float Deceleration = 50.0f;
+
         public BallController(World world) : base(world)
         {
         }
@@ -87,7 +90,12 @@ namespace Dodgeball.Controllers
 
         protected override void setVelocity(Entity entity, float dt)
         {
-            // TODO
+            entity.TopSpeed -= Deceleration * dt;
+            if (entity.TopSpeed < 0)
+                entity.TopSpeed = 0;
+            if (entity.Velocity.LengthSquared() > 0)
+                entity.Velocity = Vector2.Normalize(entity.Velocity);
+            entity.Velocity = Vector2.Multiply(entity.Velocity, entity.TopSpeed);
         }
     }
 }
