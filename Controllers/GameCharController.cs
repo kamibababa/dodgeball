@@ -58,7 +58,7 @@ namespace Dodgeball.Controllers
             else // Right
                 pos.X -= BallSpawnDist;
 
-            Vector2 dir = Vector2.Subtract(throwHere, thrower.Position);
+            Vector2 dir = Vector2.Subtract(throwHere, pos);
             if (dir.LengthSquared() > 0) // Prevents divide-by-zero crash if player clicks exactly on gameChar position
                 dir = Vector2.Normalize(dir);
 
