@@ -177,7 +177,19 @@ namespace Dodgeball.Controllers
 
         private void avoidMove(Entity entity)
         {
-            // TODO
+            entity.Velocity = new Vector2();
+
+            entity.Velocity.X = 1;
+
+            // Move down if player is in top third of screen
+            if (world.Player.Position.Y < World.Height / 3)
+                entity.Velocity.Y = 1;
+            // Move up if player is in bottom third of screen
+            else if (world.Player.Position.Y > World.Height / 3 * 2)
+                entity.Velocity.Y = -1;
+
+            if (entity.Velocity.LengthSquared() > 0)
+                entity.Velocity = Vector2.Multiply(Vector2.Normalize(entity.Velocity), entity.TopSpeed);
         }
     }
 }
