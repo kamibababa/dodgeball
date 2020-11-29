@@ -1,4 +1,5 @@
-﻿using Dodgeball.Models;
+﻿using Dodgeball.Controllers;
+using Dodgeball.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,6 +17,7 @@ namespace Dodgeball.Views
         private const float VeryLowHealth = .2f;
         private const float LowHealth = .4f;
         private const float MediumHealth = .6f;
+        private const int CursorSize = 36;
 
         private SpriteBatch spriteBatch;
         private GraphicsDevice graphicsDevice;
@@ -72,6 +74,8 @@ namespace Dodgeball.Views
                 drawLungeBar(gameChar);
             }
 
+            drawCursor();
+
             spriteBatch.End();
 
             // Draw render target to window
@@ -79,6 +83,16 @@ namespace Dodgeball.Views
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             spriteBatch.Draw(renderTarget, new Rectangle(0, 0, WindowWidth, WindowHeight), Color.White);
             spriteBatch.End();
+        }
+
+        // Render mouse cursor
+        private void drawCursor()
+        {
+            Rectangle dest = new Rectangle((int)(Input.MouseVirtualPos.X - CursorSize / 2),
+                (int)(Input.MouseVirtualPos.Y - CursorSize / 2),
+                CursorSize,
+                CursorSize);
+            spriteBatch.Draw(textures.CursorGray, dest, Color.White);
         }
 
         private void drawLungeBar(GameChar gameChar)

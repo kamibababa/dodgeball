@@ -75,5 +75,15 @@ namespace Dodgeball.Controllers
                 return keyboardState.IsKeyDown(Keys.S) || keyboardState.IsKeyDown(Keys.Down);
             }
         }
+
+        public static Vector2 MouseVirtualPos
+        {
+            get
+            {
+                return new Vector2(
+                    (float)mouseState.X / Renderer.WindowWidth * World.Width,
+                    (float)mouseState.Y / Renderer.WindowHeight * World.Height);
+            }
+        }
     }
 }
