@@ -20,6 +20,7 @@ namespace Dodgeball.Models
         public const float LungeLength = 0.15f;
         public const float LungeCooldownLength = 3.0f;
         public const float LungeSpeed = 1200;
+        public const float EnemyAttackWaitMax = 3.0f;
 
         private const int OffWall = 40;
 
@@ -29,6 +30,7 @@ namespace Dodgeball.Models
         public int BallsHeld, MaxBallsHeld;
         public float LungeTimer, LungeCooldown;
         public Vector2 LungeDirection;
+        public float AttackTimer; // Only used by enemy AI
 
         public GameChar(Team team, Avatar avatar, World world)
         {
@@ -43,6 +45,9 @@ namespace Dodgeball.Models
             AvatarType = avatar;
             Health = MaxHealth;
             BallsHeld = 0;
+
+            Random random = new Random();
+            AttackTimer = (float) random.NextDouble() * EnemyAttackWaitMax;
 
             // Set position
             if (Side == Team.Left)

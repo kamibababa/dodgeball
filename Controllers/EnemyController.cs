@@ -16,9 +16,11 @@ namespace Dodgeball.Controllers
         private const int AttackFollowRange = 100;
 
         private AI ai;
+        private Random random;
 
         public EnemyController(World world) : base(world)
         {
+            random = new Random();
         }
 
         public override void Update(float dt)
@@ -64,7 +66,19 @@ namespace Dodgeball.Controllers
 
         protected override void handleAttack(GameChar gameChar, float dt)
         {
-            // TODO
+            if (ai == AI.Attack)
+            {
+                gameChar.AttackTimer -= dt;
+                if (gameChar.AttackTimer <= 0)
+                {
+                    gameChar.AttackTimer = (float)random.NextDouble() * GameChar.EnemyAttackWaitMax;
+                    if (gameChar.BallsHeld > 0)
+                    {
+                        gameChar.BallsHeld--;
+                        throwBall(gameChar, world.Player.Position);
+                    }
+                }
+            }
         }
 
         protected override void setVelocity(Entity entity, float dt)
