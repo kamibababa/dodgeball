@@ -12,6 +12,7 @@ namespace Dodgeball.Views
         public Dictionary<World.Enviro, Texture2D> Environments;
         public Dictionary<GameChar.Avatar, Texture2D> GameChars;
         public Texture2D BallAlive, BallDead;
+        public Texture2D CursorRed, CursorGray;
 
         public TextureSet(ContentManager content)
         {
@@ -36,6 +37,9 @@ namespace Dodgeball.Views
 
             BallAlive = content.Load<Texture2D>("Images/ballAlive");
             BallDead = content.Load<Texture2D>("Images/ballDead");
+
+            CursorRed = content.Load<Texture2D>("Images/cursorRed");
+            CursorGray = content.Load<Texture2D>("Images/cursorGray");
         }
     }
 }
