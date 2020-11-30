@@ -13,6 +13,11 @@ namespace Dodgeball.Views
         public Dictionary<GameChar.Avatar, Texture2D> GameChars;
         public Texture2D BallAlive, BallDead;
         public Texture2D CursorRed, CursorGray;
+        public Texture2D ReadyText;
+        public Texture2D WinnerTextRed, WinnerTextWhite;
+        public Texture2D LoserTextRed, LoserTextWhite;
+        public Texture2D GameOverTextRed, GameOverTextWhite;
+        public Texture2D[] PauseMenu;
 
         public TextureSet(ContentManager content)
         {
@@ -40,6 +45,20 @@ namespace Dodgeball.Views
 
             CursorRed = content.Load<Texture2D>("Images/cursorRed");
             CursorGray = content.Load<Texture2D>("Images/cursorGray");
+
+            ReadyText = content.Load<Texture2D>("Images/UI/readyText");
+            WinnerTextRed = content.Load<Texture2D>("Images/UI/winnerTextRed");
+            WinnerTextWhite = content.Load<Texture2D>("Images/UI/winnerTextWhite");
+            LoserTextRed = content.Load<Texture2D>("Images/UI/loserTextRed");
+            LoserTextWhite = content.Load<Texture2D>("Images/UI/loserTextWhite");
+            GameOverTextRed = content.Load<Texture2D>("Images/UI/gameOverTextRed");
+            GameOverTextWhite = content.Load<Texture2D>("Images/UI/gameOverTextWhite");
+
+            PauseMenu = new Texture2D[4];
+            PauseMenu[0] = content.Load<Texture2D>("Images/UI/pauseMenuOption0");
+            PauseMenu[1] = content.Load<Texture2D>("Images/UI/pauseMenuOption1");
+            PauseMenu[2] = content.Load<Texture2D>("Images/UI/pauseMenuOption2");
+            PauseMenu[3] = content.Load<Texture2D>("Images/UI/pauseMenuOption3");
         }
     }
 }
