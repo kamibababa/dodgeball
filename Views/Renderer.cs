@@ -88,11 +88,20 @@ namespace Dodgeball.Views
         // Render mouse cursor
         private void drawCursor()
         {
+            Texture2D cursor = textures.CursorGray;
+            foreach (GameChar enemy in world.Enemies)
+            {
+                if (enemy.Bounds.Contains(Input.MouseVirtualPos))
+                {
+                    cursor = textures.CursorRed;
+                    break;
+                }
+            }
             Rectangle dest = new Rectangle((int)(Input.MouseVirtualPos.X - CursorSize / 2),
                 (int)(Input.MouseVirtualPos.Y - CursorSize / 2),
                 CursorSize,
                 CursorSize);
-            spriteBatch.Draw(textures.CursorGray, dest, Color.White);
+            spriteBatch.Draw(cursor, dest, Color.White);
         }
 
         private void drawLungeBar(GameChar gameChar)

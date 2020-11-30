@@ -75,7 +75,7 @@ namespace Dodgeball.Controllers
                     if (gameChar.BallsHeld > 0)
                     {
                         gameChar.BallsHeld--;
-                        throwBall(gameChar, world.Player.Position);
+                        throwBall(gameChar, world.Player.Position, false); // Always a normal throw
                     }
                 }
             }

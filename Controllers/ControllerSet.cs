@@ -21,9 +21,9 @@ namespace Dodgeball.Controllers
 
         public void Update(float dt)
         {
+            ballController.Update(dt); // Put ahead of GameCharControllers since recoil can push GameChars out of bounds
             playerController.Update(dt);
             enemyController.Update(dt);
-            ballController.Update(dt);
         }
     }
 }

@@ -72,6 +72,7 @@ namespace Dodgeball.Models
                 Balls.Add(new Ball(
                     new Vector2(Width / 2, Height / (2 * BallsToSpawn) * (1 + 2 * i)),
                     new Vector2(),
+                    false,
                     false));
             }
 

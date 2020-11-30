@@ -61,7 +61,17 @@ namespace Dodgeball.Controllers
                 if (gameChar.BallsHeld > 0)
                 {
                     gameChar.BallsHeld--;
-                    throwBall(gameChar, Input.ThrowHere);
+                    // Check for fast throw
+                    bool fastThrow = false;
+                    foreach (GameChar enemy in world.Enemies)
+                    {
+                        if (enemy.Bounds.Contains(Input.MouseVirtualPos))
+                        {
+                            fastThrow = true;
+                            break;
+                        }
+                    }
+                    throwBall(gameChar, Input.ThrowHere, fastThrow);
                 }
             }
         }

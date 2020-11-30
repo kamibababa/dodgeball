@@ -50,7 +50,7 @@ namespace Dodgeball.Controllers
             }
         }
 
-        protected void throwBall(GameChar thrower, Vector2 throwHere)
+        protected void throwBall(GameChar thrower, Vector2 throwHere, bool fastThrow)
         {
             Vector2 pos = new Vector2(thrower.Position.X, thrower.Position.Y);
             if (thrower.Side == GameChar.Team.Left)
@@ -62,7 +62,7 @@ namespace Dodgeball.Controllers
             if (dir.LengthSquared() > 0) // Prevents divide-by-zero crash if player clicks exactly on gameChar position
                 dir = Vector2.Normalize(dir);
 
-            world.Balls.Add(new Ball(pos, dir, true));
+            world.Balls.Add(new Ball(pos, dir, true, fastThrow));
         }
     }
 }
