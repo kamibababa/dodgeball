@@ -11,7 +11,7 @@ namespace Dodgeball.Models
         public int Bounces;
 
         private const int NormalSpeed = 600;
-        private const int FastSpeed = 900;
+        private const int FastSpeed = 800;
 
         public Ball(Vector2 position, Vector2 direction, bool alive, bool fastThrow)
         {
