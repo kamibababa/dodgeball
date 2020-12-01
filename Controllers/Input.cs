@@ -16,7 +16,7 @@ namespace Dodgeball.Controllers
         private static KeyboardState keyboardState, lastKeyboardState;
         private static MouseState mouseState, lastMouseState;
 
-        public static void Update()
+        public static void Update(Dodgeball.GameState gameState)
         {
             lastKeyboardState = keyboardState;
             lastMouseState = mouseState;
@@ -24,23 +24,26 @@ namespace Dodgeball.Controllers
             keyboardState = Keyboard.GetState();
             mouseState = Mouse.GetState();
 
-            // Throw
-            if (mouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton != ButtonState.Pressed)
+            if (gameState == Dodgeball.GameState.Playing)
             {
-                Throw = true;
-                // Scale window coordinates to world coordinates
-                ThrowHere = new Vector2(
-                    (float) mouseState.X / Renderer.WindowWidth * World.Width,
-                    (float) mouseState.Y / Renderer.WindowHeight * World.Height);
-            }
-            // Lunge
-            else if (mouseState.RightButton == ButtonState.Pressed && lastMouseState.RightButton != ButtonState.Pressed)
-            {
-                Lunge = true;
-                // Scale window coordinates to world coordinates
-                LungeHere = new Vector2(
-                    (float)mouseState.X / Renderer.WindowWidth * World.Width,
-                    (float)mouseState.Y / Renderer.WindowHeight * World.Height);
+                // Throw
+                if (mouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton != ButtonState.Pressed)
+                {
+                    Throw = true;
+                    // Scale window coordinates to world coordinates
+                    ThrowHere = new Vector2(
+                        (float)mouseState.X / Renderer.WindowWidth * World.Width,
+                        (float)mouseState.Y / Renderer.WindowHeight * World.Height);
+                }
+                // Lunge
+                else if (mouseState.RightButton == ButtonState.Pressed && lastMouseState.RightButton != ButtonState.Pressed)
+                {
+                    Lunge = true;
+                    // Scale window coordinates to world coordinates
+                    LungeHere = new Vector2(
+                        (float)mouseState.X / Renderer.WindowWidth * World.Width,
+                        (float)mouseState.Y / Renderer.WindowHeight * World.Height);
+                }
             }
         }
 

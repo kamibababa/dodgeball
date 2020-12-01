@@ -9,6 +9,12 @@ namespace Dodgeball
 {
     public class Dodgeball : Game
     {
+        public enum GameState
+        {
+            Ready, Playing, Paused, LevelOver
+        }
+
+        private GameState gameState;
         private GraphicsDeviceManager graphics;
         private World world;
         private ControllerSet controllers;
@@ -16,6 +22,7 @@ namespace Dodgeball
 
         public Dodgeball()
         {
+            gameState = GameState.Playing;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = false;
@@ -38,8 +45,9 @@ namespace Dodgeball
         protected override void Update(GameTime gameTime)
         {
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Input.Update();
-            controllers.Update(dt);
+            Input.Update(gameState);
+            if (gameState == GameState.Playing)
+                controllers.Update(dt);
             base.Update(gameTime);
         }
 
