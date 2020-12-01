@@ -25,14 +25,22 @@ namespace Dodgeball.Controllers
 
         public override void Update(float dt)
         {
-            foreach (GameChar enemy in world.Enemies)
+            for (int i = world.Enemies.Count - 1; i >= 0; i--)
             {
+                GameChar enemy = world.Enemies[i];
                 ai = setAI(enemy);
                 handleAttack(enemy, dt);
                 setVelocity(enemy, dt);
                 setPosition(enemy, dt);
                 enemy.SetBounds();
                 boundsCheck(enemy);
+
+                // Remove dead enemies
+                if (enemy.Health <= 0)
+                {
+                    world.AllGameChars.Remove(enemy);
+                    world.Enemies.RemoveAt(i);
+                }
             }
         }
 
