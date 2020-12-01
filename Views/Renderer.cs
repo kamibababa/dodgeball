@@ -19,6 +19,7 @@ namespace Dodgeball.Views
         private const float LowHealth = .4f;
         private const float MediumHealth = .6f;
         private const int CursorSize = 36;
+        private const float PopupFlashLength = 0.75f;
 
         private SpriteBatch spriteBatch;
         private GraphicsDevice graphicsDevice;
@@ -44,7 +45,7 @@ namespace Dodgeball.Views
             whiteRect.SetData(new[] { Color.White });
         }
 
-        public void Render(Dodgeball.GameState gameState)
+        public void Render(Dodgeball.GameState gameState, float levelOverTimer)
         {
             graphicsDevice.Clear(Color.Black);
 
@@ -75,7 +76,7 @@ namespace Dodgeball.Views
                 drawLungeBar(gameChar);
             }
 
-            drawPopUps(gameState);
+            drawPopUps(gameState, levelOverTimer);
             drawCursor();
 
             spriteBatch.End();
@@ -87,7 +88,7 @@ namespace Dodgeball.Views
             spriteBatch.End();
         }
 
-        private void drawPopUps(Dodgeball.GameState gameState)
+        private void drawPopUps(Dodgeball.GameState gameState, float levelOverTimer)
         {
             // Ready
             if (gameState == Dodgeball.GameState.Ready)
@@ -95,9 +96,32 @@ namespace Dodgeball.Views
                 drawTextureAtCenter(textures.ReadyText);
             }
 
+            // Paused
             else if (gameState == Dodgeball.GameState.Paused)
             {
                 drawTextureAtCenter(textures.PauseMenu[0]);
+            }
+
+            // Level over
+            else if (gameState == Dodgeball.GameState.LevelOver)
+            {
+                // Winner
+                if (world.Enemies.Count == 0)
+                {
+                    if (levelOverTimer % (PopupFlashLength * 2) < PopupFlashLength)
+                        drawTextureAtCenter(textures.WinnerTextWhite);
+                    else
+                        drawTextureAtCenter(textures.WinnerTextRed);
+                }
+
+                // Loser
+                else if (world.Player.Health <= 0)
+                {
+                    if (levelOverTimer % (PopupFlashLength * 2) < PopupFlashLength)
+                        drawTextureAtCenter(textures.LoserTextWhite);
+                    else
+                        drawTextureAtCenter(textures.LoserTextRed);
+                }
             }
         }
 

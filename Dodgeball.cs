@@ -18,7 +18,7 @@ namespace Dodgeball
         private const float ReadyLength = 3.0f;
 
         private GameState gameState;
-        private float timer;
+        private float timer, levelOverTimer;
         private GraphicsDeviceManager graphics;
         private World world;
         private ControllerSet controllers;
@@ -35,6 +35,7 @@ namespace Dodgeball
         protected override void Initialize()
         {
             timer = -ReadyLength; // Game starts at 0
+            levelOverTimer = 0;
             base.Initialize();
         }
 
@@ -57,10 +58,14 @@ namespace Dodgeball
 
         private void setGameState(float dt)
         {
-            // Update timer
+            // Update timers
             if (gameState == GameState.Ready || gameState == GameState.Playing)
             {
                 timer += dt;
+            }
+            else if (gameState == GameState.LevelOver)
+            {
+                levelOverTimer += dt;
             }
 
             // Ready to Playing
@@ -89,11 +94,17 @@ namespace Dodgeball
                         gameState = GameState.Playing;
                 }
             }
+
+            // Level over
+            if (world.Enemies.Count == 0 || world.Player.Health == 0)
+            {
+                gameState = GameState.LevelOver;
+            }
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            renderer.Render(gameState);
+            renderer.Render(gameState, levelOverTimer);
             base.Draw(gameTime);
         }
     }
