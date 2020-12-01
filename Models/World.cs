@@ -56,14 +56,34 @@ namespace Dodgeball.Models
                     break;
             }
 
-            // Load GameChars
+            // Load player
             AllGameChars = new List<GameChar>();
-            Player = new GameChar(GameChar.Team.Left, GameChar.Avatar.Joey, this);
+            Player = new GameChar(GameChar.Team.Left, GameChar.Avatar.Joey, this, 0, 1);
             AllGameChars.Add(Player);
+
+            // Load enemies
             Enemies = new List<GameChar>();
-            GameChar enemy = new GameChar(GameChar.Team.Right, GameChar.Avatar.Max, this);
-            Enemies.Add(enemy);
-            AllGameChars.Add(enemy);
+            switch (day)
+            {
+                case Day.Mon:
+                    loadEnemy(GameChar.Avatar.Richard, 0, 1);
+                    break;
+                case Day.Tue:
+                    loadEnemy(GameChar.Avatar.Max, 0, 1);
+                    break;
+                case Day.Wed:
+                    loadEnemy(GameChar.Avatar.Eduardo, 0, 1);
+                    loadEnemy(GameChar.Avatar.Dylan, 0, 1);
+                    break;
+                case Day.Thu:
+                    loadEnemy(GameChar.Avatar.Tim, 0, 1);
+                    loadEnemy(GameChar.Avatar.Emily, 0, 1);
+                    loadEnemy(GameChar.Avatar.Li, 0, 1);
+                    break;
+                case Day.Fri:
+                    loadEnemy(GameChar.Avatar.Omega, 0, 1);
+                    break;
+            }
 
             // Load balls
             Balls = new List<Ball>();
@@ -76,6 +96,13 @@ namespace Dodgeball.Models
                     false));
             }
 
+        }
+
+        private void loadEnemy(GameChar.Avatar avatar, int charNum, int totalChars)
+        {
+            GameChar enemy = new GameChar(GameChar.Team.Right, avatar, this, charNum, totalChars);
+            Enemies.Add(enemy);
+            AllGameChars.Add(enemy);
         }
     }
 }

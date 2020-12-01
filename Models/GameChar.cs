@@ -32,12 +32,14 @@ namespace Dodgeball.Models
         public Vector2 LungeDirection;
         public float AttackTimer; // Only used by enemy AI
 
-        public GameChar(Team team, Avatar avatar, World world)
+        public GameChar(Team team, Avatar avatar, World world, int charNum, int totalChars)
         {
             // Class attributes
             Bounds.Width = 36;
             Bounds.Height = 80;
             TopSpeed = 220;
+            if (avatar == Avatar.Richard)
+                TopSpeed /= 2;
             MaxHealth = 100;
             MaxBallsHeld = 3;
 
@@ -54,7 +56,7 @@ namespace Dodgeball.Models
                 Position.X = OffWall;
             else // Right
                 Position.X = World.Width - OffWall;
-            Position.Y = World.Height / 2;
+            Position.Y = World.Height / (totalChars + 1) * (charNum + 1);
 
             SetBounds();
         }
