@@ -94,6 +94,11 @@ namespace Dodgeball.Views
             {
                 drawTextureAtCenter(textures.ReadyText);
             }
+
+            else if (gameState == Dodgeball.GameState.Paused)
+            {
+                drawTextureAtCenter(textures.PauseMenu[0]);
+            }
         }
 
         // Draw a texture at the center of the screen

@@ -68,6 +68,27 @@ namespace Dodgeball
             {
                 gameState = GameState.Playing;
             }
+
+            // Ready || Playing to Paused
+            if (gameState == GameState.Ready || gameState == GameState.Playing)
+            {
+                if (Input.Pause)
+                {
+                    gameState = GameState.Paused;
+                }
+            }
+
+            // Paused to Ready || Playing
+            if (gameState == GameState.Paused)
+            {
+                if (!Input.Pause)
+                {
+                    if (timer < 0)
+                        gameState = GameState.Ready;
+                    else
+                        gameState = GameState.Playing;
+                }
+            }
         }
 
         protected override void Draw(GameTime gameTime)

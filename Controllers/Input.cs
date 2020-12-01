@@ -10,6 +10,7 @@ namespace Dodgeball.Controllers
 {
     static class Input
     {
+        public static bool Pause = false;
         public static bool Throw = false, Lunge = false;
         public static Vector2 ThrowHere, LungeHere;
 
@@ -23,6 +24,12 @@ namespace Dodgeball.Controllers
 
             keyboardState = Keyboard.GetState();
             mouseState = Mouse.GetState();
+
+            // Pause
+            if (keyboardState.IsKeyDown(Keys.Escape) && !lastKeyboardState.IsKeyDown(Keys.Escape))
+            {
+                Pause = !Pause;
+            }
 
             if (gameState == Dodgeball.GameState.Playing)
             {
