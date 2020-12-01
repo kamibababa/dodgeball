@@ -4,6 +4,7 @@ using Dodgeball.Views;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Dodgeball
 {
@@ -14,7 +15,10 @@ namespace Dodgeball
             Ready, Playing, Paused, LevelOver
         }
 
+        private const float ReadyLength = 3.0f;
+
         private GameState gameState;
+        private float timer;
         private GraphicsDeviceManager graphics;
         private World world;
         private ControllerSet controllers;
@@ -22,7 +26,7 @@ namespace Dodgeball
 
         public Dodgeball()
         {
-            gameState = GameState.Playing;
+            gameState = GameState.Ready;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = false;
@@ -30,8 +34,7 @@ namespace Dodgeball
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
+            timer = -ReadyLength; // Game starts at 0
             base.Initialize();
         }
 
@@ -45,15 +48,31 @@ namespace Dodgeball
         protected override void Update(GameTime gameTime)
         {
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            setGameState(dt);
             Input.Update(gameState);
             if (gameState == GameState.Playing)
                 controllers.Update(dt);
             base.Update(gameTime);
         }
 
+        private void setGameState(float dt)
+        {
+            // Update timer
+            if (gameState == GameState.Ready || gameState == GameState.Playing)
+            {
+                timer += dt;
+            }
+
+            // Ready to Playing
+            if (gameState == GameState.Ready && timer >= 0)
+            {
+                gameState = GameState.Playing;
+            }
+        }
+
         protected override void Draw(GameTime gameTime)
         {
-            renderer.Render();
+            renderer.Render(gameState);
             base.Draw(gameTime);
         }
     }

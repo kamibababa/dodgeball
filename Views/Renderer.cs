@@ -14,6 +14,7 @@ namespace Dodgeball.Views
         public const int WindowWidth = 1280;
         public const int WindowHeight = 720;
 
+        private const int Scale = 4; // Ratio of virtual size to native texture size
         private const float VeryLowHealth = .2f;
         private const float LowHealth = .4f;
         private const float MediumHealth = .6f;
@@ -43,7 +44,7 @@ namespace Dodgeball.Views
             whiteRect.SetData(new[] { Color.White });
         }
 
-        public void Render()
+        public void Render(Dodgeball.GameState gameState)
         {
             graphicsDevice.Clear(Color.Black);
 
@@ -74,6 +75,7 @@ namespace Dodgeball.Views
                 drawLungeBar(gameChar);
             }
 
+            drawPopUps(gameState);
             drawCursor();
 
             spriteBatch.End();
@@ -83,6 +85,26 @@ namespace Dodgeball.Views
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             spriteBatch.Draw(renderTarget, new Rectangle(0, 0, WindowWidth, WindowHeight), Color.White);
             spriteBatch.End();
+        }
+
+        private void drawPopUps(Dodgeball.GameState gameState)
+        {
+            // Ready
+            if (gameState == Dodgeball.GameState.Ready)
+            {
+                drawTextureAtCenter(textures.ReadyText);
+            }
+        }
+
+        // Draw a texture at the center of the screen
+        private void drawTextureAtCenter(Texture2D texture)
+        {
+            Rectangle dest = new Rectangle(
+                World.Width / 2 - texture.Width * Scale / 2,
+                World.Height / 2 - texture.Height * Scale / 2,
+                texture.Width * Scale,
+                texture.Height * Scale);
+            spriteBatch.Draw(texture, dest, Color.White);
         }
 
         // Render mouse cursor
