@@ -11,9 +11,12 @@ namespace Dodgeball.Controllers
 {
     static class Input
     {
+        private static int NumPauseOptions = 3;
+
         public static bool Pause = false;
         public static bool Throw = false, Lunge = false;
         public static Vector2 ThrowHere, LungeHere;
+        public static int PauseSelection = NumPauseOptions; // 1 == restart, 2 == main menu, 3 == back
 
         private static KeyboardState keyboardState, lastKeyboardState;
         private static MouseState mouseState, lastMouseState;
@@ -26,9 +29,10 @@ namespace Dodgeball.Controllers
             keyboardState = Keyboard.GetState();
             mouseState = Mouse.GetState();
 
-            // Pause
+            // Look for pause
             if (keyboardState.IsKeyDown(Keys.Escape) && !lastKeyboardState.IsKeyDown(Keys.Escape))
             {
+                PauseSelection = NumPauseOptions; // Last option is back
                 Pause = !Pause;
             }
 
@@ -51,6 +55,41 @@ namespace Dodgeball.Controllers
                     LungeHere = new Vector2(
                         (float)mouseState.X / Renderer.WindowWidth * World.Width,
                         (float)mouseState.Y / Renderer.WindowHeight * World.Height);
+                }
+            }
+
+            // Pause menu
+            else if (gameState == GameScreen.GameState.Paused)
+            {
+                // Move selection up
+                if ((keyboardState.IsKeyDown(Keys.Up) && !lastKeyboardState.IsKeyDown(Keys.Up))
+                    || (keyboardState.IsKeyDown(Keys.W) && !lastKeyboardState.IsKeyDown(Keys.W)))
+                {
+                    if (PauseSelection > 1)
+                        PauseSelection--;
+                }
+                // Move selection down
+                if ((keyboardState.IsKeyDown(Keys.Down) && !lastKeyboardState.IsKeyDown(Keys.Down))
+                    || (keyboardState.IsKeyDown(Keys.S) && !lastKeyboardState.IsKeyDown(Keys.S)))
+                {
+                    if (PauseSelection < NumPauseOptions)
+                        PauseSelection++;
+                }
+                // Look for with enter key
+                if (keyboardState.IsKeyDown(Keys.Enter) && !lastKeyboardState.IsKeyDown(Keys.Enter))
+                {
+                    switch (PauseSelection)
+                    {
+                        case 1: // Restart
+                            // TODO
+                            break;
+                        case 2: // Main menu
+                            // TODO
+                            break;
+                        case 3: // Back
+                            Pause = !Pause;
+                            break;
+                    }
                 }
             }
         }

@@ -100,7 +100,7 @@ namespace Dodgeball.Views
             // Paused
             else if (gameState == GameScreen.GameState.Paused)
             {
-                drawTextureAtCenter(textures.PauseMenu[0]);
+                drawTextureAtCenter(textures.PauseMenu[Input.PauseSelection]);
             }
 
             // Level over
