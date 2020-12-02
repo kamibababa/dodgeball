@@ -34,8 +34,21 @@ namespace Dodgeball
         protected override void Update(GameTime gameTime)
         {
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            activeScreen.Update(dt);
             base.Update(gameTime);
+            if (activeScreen.Update(dt))
+                swapScreen();
+        }
+
+        private void swapScreen()
+        {
+            // GameScreen
+            if (activeScreen is GameScreen)
+            {
+                if (((GameScreen)activeScreen).RestartLevel)
+                    activeScreen = new GameScreen(graphics, Content, ((GameScreen)activeScreen).DayOfWeek);
+                else if (((GameScreen)activeScreen).NextLevel)
+                    activeScreen = new GameScreen(graphics, Content, ((GameScreen)activeScreen).DayOfWeek + 1);
+            }
         }
 
         protected override void Draw(GameTime gameTime)

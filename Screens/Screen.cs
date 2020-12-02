@@ -17,7 +17,7 @@ namespace Dodgeball
             this.content = content;
         }
 
-        public abstract void Update(float dt);
+        public abstract bool Update(float dt); // Returns true if screen should be swapped
         public abstract void Draw();
     }
 }

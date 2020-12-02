@@ -17,10 +17,14 @@ namespace Dodgeball.Screens
         }
 
         private const float ReadyLength = 3.0f;
+        private const float LevelOverLength = 3.0f;
 
+        public bool NextLevel, RestartLevel;
+        public World.Day DayOfWeek;
+
+        private World world;
         private GameState gameState;
         private float timer, levelOverTimer;
-        private World world;
         private ControllerSet controllers;
         private Renderer renderer;
 
@@ -28,6 +32,8 @@ namespace Dodgeball.Screens
         {
             timer = -ReadyLength; // Game starts at 0
             levelOverTimer = 0;
+            RestartLevel = false;
+            NextLevel = false;
             world = new World(day);
             controllers = new ControllerSet(world);
             renderer = new Renderer(graphics, world, content);
@@ -38,12 +44,30 @@ namespace Dodgeball.Screens
             renderer.Render(gameState, levelOverTimer);
         }
 
-        public override void Update(float dt)
+        public override bool Update(float dt)
         {
+            DayOfWeek = world.DayOfWeek;
             setGameState(dt);
             Input.Update(gameState);
             if (gameState == GameState.Playing)
                 controllers.Update(dt);
+
+            // Swap screen?
+            if (levelOverTimer >= LevelOverLength)
+            {
+                // Win
+                if (world.Enemies.Count == 0)
+                {
+                    NextLevel = true;
+                }
+                else
+                {
+                    RestartLevel = true;
+                }
+                return true;
+            }
+
+            return false;
         }
 
         private void setGameState(float dt)
