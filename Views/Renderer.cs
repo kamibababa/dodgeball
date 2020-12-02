@@ -1,5 +1,6 @@
 ﻿using Dodgeball.Controllers;
 using Dodgeball.Models;
+using Dodgeball.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -45,7 +46,7 @@ namespace Dodgeball.Views
             whiteRect.SetData(new[] { Color.White });
         }
 
-        public void Render(Dodgeball.GameState gameState, float levelOverTimer)
+        public void Render(GameScreen.GameState gameState, float levelOverTimer)
         {
             graphicsDevice.Clear(Color.Black);
 
@@ -88,22 +89,22 @@ namespace Dodgeball.Views
             spriteBatch.End();
         }
 
-        private void drawPopUps(Dodgeball.GameState gameState, float levelOverTimer)
+        private void drawPopUps(GameScreen.GameState gameState, float levelOverTimer)
         {
             // Ready
-            if (gameState == Dodgeball.GameState.Ready)
+            if (gameState == GameScreen.GameState.Ready)
             {
                 drawTextureAtCenter(textures.ReadyText);
             }
 
             // Paused
-            else if (gameState == Dodgeball.GameState.Paused)
+            else if (gameState == GameScreen.GameState.Paused)
             {
                 drawTextureAtCenter(textures.PauseMenu[0]);
             }
 
             // Level over
-            else if (gameState == Dodgeball.GameState.LevelOver)
+            else if (gameState == GameScreen.GameState.LevelOver)
             {
                 // Winner
                 if (world.Enemies.Count == 0)

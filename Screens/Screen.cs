@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,8 +8,16 @@ namespace Dodgeball
 {
     abstract class Screen
     {
-        public abstract void Initialize();
+        protected GraphicsDeviceManager graphics;
+        protected ContentManager content;
+
+        public Screen(GraphicsDeviceManager graphics, ContentManager content)
+        {
+            this.graphics = graphics;
+            this.content = content;
+        }
+
         public abstract void Update(float dt);
-        public abstract void Render(float dt);
+        public abstract void Draw();
     }
 }

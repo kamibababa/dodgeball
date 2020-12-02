@@ -1,4 +1,5 @@
 ﻿using Dodgeball.Models;
+using Dodgeball.Screens;
 using Dodgeball.Views;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -17,7 +18,7 @@ namespace Dodgeball.Controllers
         private static KeyboardState keyboardState, lastKeyboardState;
         private static MouseState mouseState, lastMouseState;
 
-        public static void Update(Dodgeball.GameState gameState)
+        public static void Update(GameScreen.GameState gameState)
         {
             lastKeyboardState = keyboardState;
             lastMouseState = mouseState;
@@ -31,7 +32,7 @@ namespace Dodgeball.Controllers
                 Pause = !Pause;
             }
 
-            if (gameState == Dodgeball.GameState.Playing)
+            if (gameState == GameScreen.GameState.Playing)
             {
                 // Throw
                 if (mouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton != ButtonState.Pressed)
