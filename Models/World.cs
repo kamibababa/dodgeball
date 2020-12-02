@@ -14,7 +14,7 @@ namespace Dodgeball.Models
 
         public enum Enviro
         {
-            Gym, Street, Field, Playground
+            Gym, Street, Playground, Field
         }
 
         public const int Width = 1024;
@@ -49,10 +49,10 @@ namespace Dodgeball.Models
                     Environment = Enviro.Street;
                     break;
                 case Day.Wed:
-                    Environment = Enviro.Field;
+                    Environment = Enviro.Playground;
                     break;
                 case Day.Thu:
-                    Environment = Enviro.Playground;
+                    Environment = Enviro.Field;
                     break;
             }
 

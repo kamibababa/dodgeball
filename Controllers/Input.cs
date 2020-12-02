@@ -13,13 +13,22 @@ namespace Dodgeball.Controllers
     {
         private static int NumPauseOptions = 3;
 
-        public static bool Pause = false;
-        public static bool Throw = false, Lunge = false;
+        public static bool Pause;
+        public static bool Throw, Lunge;
+        public static bool Restart;
         public static Vector2 ThrowHere, LungeHere;
-        public static int PauseSelection = NumPauseOptions; // 1 == restart, 2 == main menu, 3 == back
+        public static int PauseSelection; // 1 == restart, 2 == main menu, 3 == back
 
         private static KeyboardState keyboardState, lastKeyboardState;
         private static MouseState mouseState, lastMouseState;
+
+        public static void Reset()
+        {
+            Pause = false;
+            Throw = false;
+            Restart = false;
+            PauseSelection = NumPauseOptions;
+        }
 
         public static void Update(GameScreen.GameState gameState)
         {
@@ -81,7 +90,7 @@ namespace Dodgeball.Controllers
                     switch (PauseSelection)
                     {
                         case 1: // Restart
-                            // TODO
+                            Restart = true;
                             break;
                         case 2: // Main menu
                             // TODO

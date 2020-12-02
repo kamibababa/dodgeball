@@ -23,6 +23,11 @@ namespace Dodgeball
 
         protected override void Initialize()
         {
+            // Set window size & title
+            graphics.PreferredBackBufferWidth = Renderer.WindowWidth;
+            graphics.PreferredBackBufferHeight = Renderer.WindowHeight;
+            graphics.ApplyChanges();
+
             base.Initialize();
         }
 

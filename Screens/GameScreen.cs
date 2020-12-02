@@ -30,6 +30,7 @@ namespace Dodgeball.Screens
 
         public GameScreen(GraphicsDeviceManager graphics, ContentManager content, World.Day day) : base(graphics, content)
         {
+            Input.Reset();
             timer = -ReadyLength; // Game starts at 0
             levelOverTimer = 0;
             RestartLevel = false;
@@ -64,6 +65,11 @@ namespace Dodgeball.Screens
                 {
                     RestartLevel = true;
                 }
+                return true;
+            }
+            if (Input.Restart)
+            {
+                RestartLevel = true;
                 return true;
             }
 

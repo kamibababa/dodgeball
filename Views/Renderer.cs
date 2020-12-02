@@ -37,11 +37,6 @@ namespace Dodgeball.Views
             renderTarget = new RenderTarget2D(graphicsDevice, World.Width, World.Height);
             textures = new TextureSet(content);
 
-            // Set window size & title
-            graphics.PreferredBackBufferWidth = WindowWidth;
-            graphics.PreferredBackBufferHeight = WindowHeight;
-            graphics.ApplyChanges();
-
             whiteRect = new Texture2D(graphicsDevice, 1, 1);
             whiteRect.SetData(new[] { Color.White });
         }
