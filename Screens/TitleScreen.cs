@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Dodgeball.Views;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -9,7 +10,7 @@ namespace Dodgeball.Screens
 {
     class TitleScreen : Screen
     {
-        private const float FlashLength = 0.75f;
+        private const float FlashLength = 1.5f;
 
         public bool NextLevel;
 
@@ -28,12 +29,22 @@ namespace Dodgeball.Screens
 
         public override void Draw()
         {
-            throw new NotImplementedException();
+            spriteBatch.Begin();
+
+            Texture2D screenTexture;
+            if (timer % FlashLength * 2 < FlashLength)
+                screenTexture = titleScreenWhite;
+            else
+                screenTexture = titleScreenRed;
+            spriteBatch.Draw(screenTexture, new Rectangle(0, 0, Renderer.WindowWidth, Renderer.WindowHeight), Color.White);
+            
+            spriteBatch.End();
         }
 
         public override bool Update(float dt)
         {
-            throw new NotImplementedException();
+            timer += dt;
+            return false;
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Dodgeball
 
         protected override void LoadContent()
         {
-            activeScreen = new GameScreen(graphics, Content, World.Day.Mon);
+            activeScreen = new TitleScreen(graphics, Content);
         }
 
         protected override void Update(GameTime gameTime)
