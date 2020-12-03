@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -44,6 +45,16 @@ namespace Dodgeball.Screens
         public override bool Update(float dt)
         {
             timer += dt;
+
+            // Move to next screen if keyboard or mouse button is pressed
+            if (Keyboard.GetState().GetPressedKeys().Length > 0
+                || Mouse.GetState().LeftButton == ButtonState.Pressed
+                || Mouse.GetState().MiddleButton == ButtonState.Pressed
+                || Mouse.GetState().RightButton == ButtonState.Pressed)
+            {
+                return true;
+            }
+
             return false;
         }
     }

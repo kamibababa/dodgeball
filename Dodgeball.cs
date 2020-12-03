@@ -46,8 +46,14 @@ namespace Dodgeball
 
         private void swapScreen()
         {
+            // TitleScreen
+            if (activeScreen is TitleScreen)
+            {
+                activeScreen = new GameScreen(graphics, Content, World.Day.Mon);
+            }
+            
             // GameScreen
-            if (activeScreen is GameScreen)
+            else if (activeScreen is GameScreen)
             {
                 if (((GameScreen)activeScreen).RestartLevel)
                     activeScreen = new GameScreen(graphics, Content, ((GameScreen)activeScreen).DayOfWeek);
