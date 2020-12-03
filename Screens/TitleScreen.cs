@@ -13,15 +13,12 @@ namespace Dodgeball.Screens
     {
         private const float FlashLength = 1.5f;
 
-        public bool NextLevel;
-
         private float timer; 
         private Texture2D titleScreenWhite, titleScreenRed;
         private SpriteBatch spriteBatch;
 
         public TitleScreen(GraphicsDeviceManager graphics, ContentManager content) : base(graphics, content)
         {
-            NextLevel = true;
             timer = 0;
             titleScreenWhite = content.Load<Texture2D>("Images/Screens/titleScreenDesktopWhite");
             titleScreenRed = content.Load<Texture2D>("Images/Screens/titleScreenDesktopRed");
