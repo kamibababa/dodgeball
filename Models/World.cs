@@ -19,6 +19,7 @@ namespace Dodgeball.Models
 
         public const int Width = 1024;
         public const int Height = 576;
+        public static int NumDays = Enum.GetValues(typeof(Day)).Length;
 
         private const int BallsToSpawn = 3;
 

@@ -49,7 +49,7 @@ namespace Dodgeball
             // TitleScreen
             if (activeScreen is TitleScreen)
             {
-                activeScreen = new GameScreen(graphics, Content, World.Day.Mon);
+                activeScreen = new LevelSelectScreen(graphics, Content);
             }
             
             // GameScreen
