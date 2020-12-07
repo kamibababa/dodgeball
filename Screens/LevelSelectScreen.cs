@@ -3,6 +3,7 @@ using Dodgeball.Views;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,12 +27,16 @@ namespace Dodgeball.Screens
         private SpriteBatch spriteBatch;
         private Texture2D levelSelectScreen;
         private Dictionary<World.Day, Texture2D> whiteTiles, redTiles;
-           
+        private KeyboardState keyboardState, lastKeyboardState;
+        private MouseState mouseState, lastMouseState;
+        private bool isFirstFrame;
+
         public LevelSelectScreen(GraphicsDeviceManager graphics, ContentManager content) : base(graphics, content)
         {
-            SelectedDay = null;
+            SelectedDay = World.Day.Mon;
             spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
 
+            isFirstFrame = true;
 
             // Load textures
             levelSelectScreen = content.Load<Texture2D>("Images/Screens/levelSelectScreen");
@@ -71,7 +76,41 @@ namespace Dodgeball.Screens
 
         public override bool Update(float dt)
         {
-            // TODO
+            lastKeyboardState = keyboardState;
+            lastMouseState = mouseState;
+
+            keyboardState = Keyboard.GetState();
+            mouseState = Mouse.GetState();
+
+            if (!isFirstFrame) // Prevents click-thru from TitleScreen
+            {
+                // Mouse click
+                if (mouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton != ButtonState.Pressed)
+                {
+                    Vector2 mousePos = new Vector2(mouseState.X, mouseState.Y);
+                    World.Day? newSelection = null;
+                    for (int i = 0; i < World.NumDays; i++)
+                    {
+                        if (TileLocations[i].Contains(mousePos))
+                        {
+                            newSelection = (World.Day)i;
+                        }
+                    }
+
+                    if (newSelection != null)
+                    {
+                        if (newSelection == SelectedDay) // Selection confirmed
+                            return true;
+                        else // Change selection
+                            SelectedDay = newSelection.Value;
+                    }
+                }
+
+                // TODO Keyboard
+            }
+
+            isFirstFrame = false;
+
             return false;
         }
     }

@@ -18,7 +18,7 @@ namespace Dodgeball
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = false;
+            IsMouseVisible = true;
         }
 
         protected override void Initialize()
@@ -50,6 +50,12 @@ namespace Dodgeball
             if (activeScreen is TitleScreen)
             {
                 activeScreen = new LevelSelectScreen(graphics, Content);
+            }
+
+            // LevelSelectScreen
+            else if (activeScreen is LevelSelectScreen)
+            {
+                activeScreen = new GameScreen(graphics, Content, ((LevelSelectScreen)activeScreen).SelectedDay.Value);
             }
             
             // GameScreen
