@@ -106,7 +106,28 @@ namespace Dodgeball.Screens
                     }
                 }
 
-                // TODO Keyboard
+                // Keyboard
+                // Forwards
+                if ((keyboardState.IsKeyDown(Keys.Right) && !lastKeyboardState.IsKeyDown(Keys.Right)) ||
+                    (keyboardState.IsKeyDown(Keys.Down) && !lastKeyboardState.IsKeyDown(Keys.Down)))
+                {
+                    if ((int)SelectedDay < World.NumDays - 1)
+                    {
+                        SelectedDay = (World.Day)((int)SelectedDay + 1);
+                    }
+                }
+                // Backwards
+                if ((keyboardState.IsKeyDown(Keys.Left) && !lastKeyboardState.IsKeyDown(Keys.Left)) ||
+                    (keyboardState.IsKeyDown(Keys.Up) && !lastKeyboardState.IsKeyDown(Keys.Up)))
+                {
+                    if ((int)SelectedDay > 0)
+                    {
+                        SelectedDay = (World.Day)((int)SelectedDay - 1);
+                    }
+                }
+                // Confirm selection
+                if (keyboardState.IsKeyDown(Keys.Enter) && !lastKeyboardState.IsKeyDown(Keys.Enter))
+                    return true;
             }
 
             isFirstFrame = false;
