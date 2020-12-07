@@ -20,7 +20,6 @@ namespace Dodgeball.Screens
             new Rectangle(265, 436, 350, 210),
             new Rectangle(665, 436, 350, 210)
         };
-        private Rectangle RestartLocation = new Rectangle(1048, 440, 200, 200);
 
         public World.Day? SelectedDay; // Nullable enum
 
@@ -126,7 +125,8 @@ namespace Dodgeball.Screens
                     }
                 }
                 // Confirm selection
-                if (keyboardState.IsKeyDown(Keys.Enter) && !lastKeyboardState.IsKeyDown(Keys.Enter))
+                if ((keyboardState.IsKeyDown(Keys.Enter) && !lastKeyboardState.IsKeyDown(Keys.Enter)) ||
+                    (keyboardState.IsKeyDown(Keys.Space) && !lastKeyboardState.IsKeyDown(Keys.Space)))
                     return true;
             }
 
