@@ -73,13 +73,13 @@ namespace Dodgeball.Models
                     loadEnemy(GameChar.Avatar.Max, 0, 1);
                     break;
                 case Day.Wed:
-                    loadEnemy(GameChar.Avatar.Eduardo, 0, 1);
-                    loadEnemy(GameChar.Avatar.Dylan, 0, 1);
+                    loadEnemy(GameChar.Avatar.Eduardo, 0, 2);
+                    loadEnemy(GameChar.Avatar.Dylan, 1, 2);
                     break;
                 case Day.Thu:
-                    loadEnemy(GameChar.Avatar.Tim, 0, 1);
-                    loadEnemy(GameChar.Avatar.Emily, 0, 1);
-                    loadEnemy(GameChar.Avatar.Li, 0, 1);
+                    loadEnemy(GameChar.Avatar.Tim, 0, 3);
+                    loadEnemy(GameChar.Avatar.Emily, 1, 3);
+                    loadEnemy(GameChar.Avatar.Li, 2, 3);
                     break;
                 case Day.Fri:
                     loadEnemy(GameChar.Avatar.Omega, 0, 1);
