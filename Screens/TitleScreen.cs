@@ -9,14 +9,12 @@ using System.Text;
 
 namespace Dodgeball.Screens
 {
-    class TitleScreen : Screen
+    class TitleScreen : MenuScreen
     {
-        private const int CursorSize = 45;
         private const float FlashLength = 1.5f;
 
         private float timer; 
         private Texture2D titleScreenWhite, titleScreenRed;
-        private SpriteBatch spriteBatch;
         private Texture2D cursor;
 
         public TitleScreen(GraphicsDeviceManager graphics, ContentManager content) : base(graphics, content)
@@ -24,7 +22,6 @@ namespace Dodgeball.Screens
             timer = 0;
             titleScreenWhite = content.Load<Texture2D>("Images/Screens/titleScreenDesktopWhite");
             titleScreenRed = content.Load<Texture2D>("Images/Screens/titleScreenDesktopRed");
-            spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
             cursor = content.Load<Texture2D>("Images/cursorRed");
         }
 
@@ -39,18 +36,15 @@ namespace Dodgeball.Screens
                 screenTexture = titleScreenRed;
             spriteBatch.Draw(screenTexture, new Rectangle(0, 0, Renderer.WindowWidth, Renderer.WindowHeight), Color.White);
 
-            // Draw cursor
-            Rectangle dest = new Rectangle((int)(Mouse.GetState().X - CursorSize / 2),
-                (int)(Mouse.GetState().Y - CursorSize / 2),
-                CursorSize,
-                CursorSize);
-            spriteBatch.Draw(cursor, dest, Color.White);
+            drawCursor(cursor);
 
             spriteBatch.End();
         }
 
         public override bool Update(float dt)
         {
+            getInput();
+
             timer += dt;
 
             // Move to next screen if keyboard or mouse button is pressed

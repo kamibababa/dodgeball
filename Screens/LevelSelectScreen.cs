@@ -10,10 +10,8 @@ using System.Text;
 
 namespace Dodgeball.Screens
 {
-    class LevelSelectScreen : Screen
+    class LevelSelectScreen : MenuScreen
     {
-        private const int CursorSize = 45;
-
         private Rectangle[] TileLocations = new Rectangle[]
         {
             new Rectangle(65, 186, 350, 210),
@@ -25,11 +23,8 @@ namespace Dodgeball.Screens
 
         public World.Day? SelectedDay; // Nullable enum
 
-        private SpriteBatch spriteBatch;
         private Texture2D levelSelectScreen;
         private Dictionary<World.Day, Texture2D> whiteTiles, redTiles;
-        private KeyboardState keyboardState, lastKeyboardState;
-        private MouseState mouseState, lastMouseState;
         private bool isFirstFrame;
         private Texture2D cursorRed, cursorGray;
 
@@ -76,13 +71,8 @@ namespace Dodgeball.Screens
                 spriteBatch.Draw(tile, TileLocations[(int)day], Color.White);
             }
 
-            // Draw cursor
-            Rectangle dest = new Rectangle((int)(Mouse.GetState().X - CursorSize / 2),
-                (int)(Mouse.GetState().Y - CursorSize / 2),
-                CursorSize,
-                CursorSize);
-            Texture2D cursor = cursorGray;
             // Show red cursor if over tile
+            Texture2D cursor = cursorGray;
             Vector2 mousePos = new Vector2(mouseState.X, mouseState.Y);
             for (int i = 0; i < World.NumDays; i++)
             {
@@ -92,18 +82,14 @@ namespace Dodgeball.Screens
                     break;
                 }
             }
-            spriteBatch.Draw(cursor, dest, Color.White);
+            drawCursor(cursor);
 
             spriteBatch.End();
         }
 
         public override bool Update(float dt)
         {
-            lastKeyboardState = keyboardState;
-            lastMouseState = mouseState;
-
-            keyboardState = Keyboard.GetState();
-            mouseState = Mouse.GetState();
+            getInput();
 
             if (!isFirstFrame) // Prevents click-thru from TitleScreen
             {
