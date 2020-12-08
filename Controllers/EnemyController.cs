@@ -89,6 +89,57 @@ namespace Dodgeball.Controllers
             }
         }
 
+        // Do not allow for collisions between enemies
+        protected override void setPosition(Entity entity, float dt)
+        {
+            Vector2 originalPos = new Vector2(entity.Position.X, entity.Position.Y);
+            Rectangle originalBounds = new Rectangle(entity.Bounds.X, entity.Bounds.Y, entity.Bounds.Width, entity.Bounds.Height);
+            
+            // X
+            Vector2 futurePos = new Vector2(originalPos.X, originalPos.Y);
+            futurePos.X += entity.Velocity.X * dt;
+            Rectangle futureBounds = new Rectangle(originalBounds.X, originalBounds.Y, originalBounds.Width, originalBounds.Height);
+            futureBounds.X = (int)(futurePos.X - futureBounds.Width / 2);
+            futureBounds.Y = (int)(futurePos.Y - futureBounds.Height / 2);
+            // Check for collisions
+            bool intersects = false;
+            foreach (GameChar enemy in world.Enemies)
+            {
+                if (!entity.Equals(enemy)) // Ensure enemy is not referencing itself
+                {
+                    if (futureBounds.Intersects(enemy.Bounds))
+                    {
+                        intersects = true;
+                        break;
+                    }
+                }
+            }
+            if (!intersects)
+                entity.Position.X += entity.Velocity.X * dt;
+
+            // Y
+            futurePos = new Vector2(originalPos.X, originalPos.Y);
+            futurePos.Y += entity.Velocity.Y * dt;
+            futureBounds = new Rectangle(originalBounds.X, originalBounds.Y, originalBounds.Width, originalBounds.Height);
+            futureBounds.X = (int)(futurePos.X - futureBounds.Width / 2);
+            futureBounds.Y = (int)(futurePos.Y - futureBounds.Height / 2);
+            // Check for collisions
+            intersects = false;
+            foreach (GameChar enemy in world.Enemies)
+            {
+                if (!entity.Equals(enemy)) // Ensure enemy is not referencing itself
+                {
+                    if (futureBounds.Intersects(enemy.Bounds))
+                    {
+                        intersects = true;
+                        break;
+                    }
+                }
+            }
+            if (!intersects)
+                entity.Position.Y += entity.Velocity.Y * dt;
+        }
+
         protected override void setVelocity(Entity entity, float dt)
         {
             switch (ai)

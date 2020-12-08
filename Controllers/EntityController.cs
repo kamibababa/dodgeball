@@ -20,7 +20,7 @@ namespace Dodgeball.Controllers
         protected abstract void boundsCheck(Entity entity);
 
         // Add velocity * dt to position
-        protected void setPosition(Entity entity, float dt)
+        protected virtual void setPosition(Entity entity, float dt)
         {
             entity.Position = Vector2.Add(entity.Position, Vector2.Multiply(entity.Velocity, dt));
         }
