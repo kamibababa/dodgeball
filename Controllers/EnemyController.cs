@@ -14,6 +14,7 @@ namespace Dodgeball.Controllers
         }
 
         private const int AttackFollowRange = 100;
+        private const int SpreadApartSpeed = 10;
 
         private AI ai;
         private Random random;
@@ -33,6 +34,7 @@ namespace Dodgeball.Controllers
                 setVelocity(enemy, dt);
                 setPosition(enemy, dt);
                 enemy.SetBounds();
+                spreadApart(enemy);
                 boundsCheck(enemy);
 
                 // Remove dead enemies
@@ -40,6 +42,33 @@ namespace Dodgeball.Controllers
                 {
                     world.AllGameChars.Remove(enemy);
                     world.Enemies.RemoveAt(i);
+                }
+            }
+        }
+
+        // Resolves problem where enemies can be recoiled on top of one another at the map's edge
+        private void spreadApart(GameChar enemy)
+        {
+            foreach (GameChar otherEnemy in world.Enemies)
+            {
+                if (!enemy.Equals(otherEnemy)) // Ensure enemy is not referencing itself
+                {
+                    if (enemy.Bounds.Intersects(otherEnemy.Bounds))
+                    {
+                        // Enemy is left of other enemy
+                        if (enemy.Position.X < otherEnemy.Position.X)
+                            enemy.Position.X -= SpreadApartSpeed;
+                        // Enemy is right of other enemy
+                        else if (enemy.Position.X > otherEnemy.Position.X)
+                            enemy.Position.X += SpreadApartSpeed;
+                        // Enemy is above other enemy
+                        if (enemy.Position.Y < otherEnemy.Position.Y)
+                            enemy.Position.Y -= SpreadApartSpeed;
+                        // Enemy is below other enemy
+                        else if (enemy.Position.Y > otherEnemy.Position.Y)
+                            enemy.Position.Y += SpreadApartSpeed;
+                        enemy.SetBounds();
+                    }
                 }
             }
         }
