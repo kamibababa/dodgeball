@@ -12,6 +12,8 @@ namespace Dodgeball.Screens
 {
     class LevelSelectScreen : Screen
     {
+        private const int CursorSize = 45;
+
         private Rectangle[] TileLocations = new Rectangle[]
         {
             new Rectangle(65, 186, 350, 210),
@@ -29,6 +31,7 @@ namespace Dodgeball.Screens
         private KeyboardState keyboardState, lastKeyboardState;
         private MouseState mouseState, lastMouseState;
         private bool isFirstFrame;
+        private Texture2D cursorRed, cursorGray;
 
         public LevelSelectScreen(GraphicsDeviceManager graphics, ContentManager content) : base(graphics, content)
         {
@@ -36,6 +39,9 @@ namespace Dodgeball.Screens
             spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
 
             isFirstFrame = true;
+
+            cursorRed = content.Load<Texture2D>("Images/cursorRed");
+            cursorGray = content.Load<Texture2D>("Images/cursorGray");
 
             // Load textures
             levelSelectScreen = content.Load<Texture2D>("Images/Screens/levelSelectScreen");
@@ -55,7 +61,7 @@ namespace Dodgeball.Screens
 
         public override void Draw()
         {
-            spriteBatch.Begin();
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
             spriteBatch.Draw(levelSelectScreen, new Rectangle(0, 0, Renderer.WindowWidth, Renderer.WindowHeight), Color.White);
 
@@ -69,6 +75,24 @@ namespace Dodgeball.Screens
                     tile = whiteTiles[day];
                 spriteBatch.Draw(tile, TileLocations[(int)day], Color.White);
             }
+
+            // Draw cursor
+            Rectangle dest = new Rectangle((int)(Mouse.GetState().X - CursorSize / 2),
+                (int)(Mouse.GetState().Y - CursorSize / 2),
+                CursorSize,
+                CursorSize);
+            Texture2D cursor = cursorGray;
+            // Show red cursor if over tile
+            Vector2 mousePos = new Vector2(mouseState.X, mouseState.Y);
+            for (int i = 0; i < World.NumDays; i++)
+            {
+                if (TileLocations[i].Contains(mousePos))
+                {
+                    cursor = cursorRed;
+                    break;
+                }
+            }
+            spriteBatch.Draw(cursor, dest, Color.White);
 
             spriteBatch.End();
         }
