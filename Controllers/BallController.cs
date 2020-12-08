@@ -56,7 +56,13 @@ namespace Dodgeball.Controllers
                         Vector2 recoil = new Vector2(ball.Velocity.X, ball.Velocity.Y);
                         if (recoil.LengthSquared() > 0)
                             recoil = Vector2.Multiply(Vector2.Normalize(recoil), RecoilDist);
-                        gameChar.Position = Vector2.Add(gameChar.Position, recoil);
+                        if (gameChar.Side == GameChar.Team.Left)
+                            gameChar.Position = Vector2.Add(gameChar.Position, recoil);
+                        else // Ensure enemies do not recoil on top of each other
+                        {
+                            if (!checkForEnemyRecoilCollision(gameChar, recoil))
+                                gameChar.Position = Vector2.Add(gameChar.Position, recoil);
+                        }
                         gameChar.SetBounds();
 
                         // Reverse ball direction
@@ -84,6 +90,30 @@ namespace Dodgeball.Controllers
                 }
             }
             return false;
+        }
+
+        // Checks that a recoiled enemy does not land on top of any other enemies
+        private bool checkForEnemyRecoilCollision(GameChar recoiled, Vector2 recoil)
+        {
+            bool intersects = false;
+            Vector2 futurePos = new Vector2(recoiled.Position.X, recoiled.Position.Y);
+            futurePos.X += recoil.X;
+            futurePos.Y += recoil.Y;
+            Rectangle futureBounds = new Rectangle(recoiled.Bounds.X, recoiled.Bounds.Y, recoiled.Bounds.Width, recoiled.Bounds.Height);
+            futureBounds.X = (int)(futurePos.X - futureBounds.Width / 2);
+            futureBounds.Y = (int)(futurePos.Y - futureBounds.Height / 2);
+            foreach (GameChar enemy in world.Enemies)
+            {
+                if (!recoiled.Equals(enemy)) // Ensure enemy is not referencing itself
+                {
+                    if (futureBounds.Intersects(enemy.Bounds))
+                    {
+                        intersects = true;
+                        break;
+                    }
+                }
+            }
+            return intersects;
         }
 
         protected override void boundsCheck(Entity entity)
