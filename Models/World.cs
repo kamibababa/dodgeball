@@ -22,6 +22,7 @@ namespace Dodgeball.Models
         public static int NumDays = Enum.GetValues(typeof(Day)).Length;
 
         private const int BallsToSpawn = 3;
+        private const int BallsToSpawnOnFriday = 5;
 
         public Day DayOfWeek;
         public Enviro Environment;
@@ -88,10 +89,11 @@ namespace Dodgeball.Models
 
             // Load balls
             Balls = new List<Ball>();
-            for (int i = 0; i < BallsToSpawn; i++)
+            int numBalls = day == Day.Fri ? BallsToSpawnOnFriday : BallsToSpawn;
+            for (int i = 0; i < numBalls; i++)
             {
                 Balls.Add(new Ball(
-                    new Vector2(Width / 2, Height / (2 * BallsToSpawn) * (1 + 2 * i)),
+                    new Vector2(Width / 2, Height / (2 * numBalls) * (1 + 2 * i)),
                     new Vector2(),
                     false,
                     false));
