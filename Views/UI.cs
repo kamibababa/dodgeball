@@ -13,5 +13,10 @@ namespace Dodgeball.Views
         public static int InventorySpacing = -12;
         public static Rectangle LeftLungeBar = new Rectangle(-12, 36, 8, 24);
         public static Rectangle RightLungeBar = new Rectangle(40, 36, 8, 24);
+
+        // Pause menu virtual locations
+        public static Rectangle RestartOption = new Rectangle(272, 208, 480, 80);
+        public static Rectangle MainMenuOption = new Rectangle(272, 288, 480, 80);
+        public static Rectangle BackOption = new Rectangle(272, 368, 480, 80);
     }
 }

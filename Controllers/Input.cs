@@ -15,7 +15,7 @@ namespace Dodgeball.Controllers
 
         public static bool Pause;
         public static bool Throw, Lunge;
-        public static bool Restart;
+        public static bool Restart, MainMenu;
         public static Vector2 ThrowHere, LungeHere;
         public static int PauseSelection; // 1 == restart, 2 == main menu, 3 == back
 
@@ -27,6 +27,7 @@ namespace Dodgeball.Controllers
             Pause = false;
             Throw = false;
             Restart = false;
+            MainMenu = false;
             PauseSelection = NumPauseOptions;
         }
 
@@ -70,6 +71,41 @@ namespace Dodgeball.Controllers
             // Pause menu
             else if (gameState == GameScreen.GameState.Paused)
             {
+                // Mouse
+                if (mouseState.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton != ButtonState.Pressed)
+                {
+                    // Restart
+                    if (UI.RestartOption.Contains(MouseVirtualPos))
+                    {
+                        // Confirm
+                        if (PauseSelection == 1)
+                            Restart = true;
+                        else
+                            PauseSelection = 1;
+                    }
+
+                    // Main menu
+                    else if (UI.MainMenuOption.Contains(MouseVirtualPos))
+                    {
+                        // Confirm
+                        if (PauseSelection == 2)
+                            MainMenu = true;
+                        else
+                            PauseSelection = 2;
+                    }
+
+                    // Back
+                    else if (UI.BackOption.Contains(MouseVirtualPos))
+                    {
+                        // Confirm
+                        if (PauseSelection == 3)
+                            Pause = !Pause;
+                        else
+                            PauseSelection = 3;
+                    }
+                }
+
+                // Keyboard
                 // Move selection up
                 if ((keyboardState.IsKeyDown(Keys.Up) && !lastKeyboardState.IsKeyDown(Keys.Up))
                     || (keyboardState.IsKeyDown(Keys.W) && !lastKeyboardState.IsKeyDown(Keys.W)))
@@ -93,7 +129,7 @@ namespace Dodgeball.Controllers
                             Restart = true;
                             break;
                         case 2: // Main menu
-                            // TODO
+                            MainMenu = true;
                             break;
                         case 3: // Back
                             Pause = !Pause;
