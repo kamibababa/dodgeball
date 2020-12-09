@@ -20,6 +20,7 @@ namespace Dodgeball.Screens
         private const float LevelOverLength = 3.0f;
 
         public bool NextLevel, RestartLevel;
+        public bool GoToLevelSelect;
         public World.Day DayOfWeek;
 
         private World world;
@@ -35,6 +36,7 @@ namespace Dodgeball.Screens
             levelOverTimer = 0;
             RestartLevel = false;
             NextLevel = false;
+            GoToLevelSelect = false;
             world = new World(day);
             controllers = new ControllerSet(world);
             renderer = new Renderer(graphics, world, content);
@@ -54,6 +56,11 @@ namespace Dodgeball.Screens
                 controllers.Update(dt);
 
             // Swap screen?
+            if (Input.MainMenu)
+            {
+                GoToLevelSelect = true;
+                return true;
+            }
             if (levelOverTimer >= LevelOverLength)
             {
                 // Win

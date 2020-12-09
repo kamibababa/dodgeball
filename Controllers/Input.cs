@@ -121,7 +121,8 @@ namespace Dodgeball.Controllers
                         PauseSelection++;
                 }
                 // Look for with enter key
-                if (keyboardState.IsKeyDown(Keys.Enter) && !lastKeyboardState.IsKeyDown(Keys.Enter))
+                if ((keyboardState.IsKeyDown(Keys.Enter) && !lastKeyboardState.IsKeyDown(Keys.Enter))
+                    || (keyboardState.IsKeyDown(Keys.Space) && !lastKeyboardState.IsKeyDown(Keys.Space)))
                 {
                     switch (PauseSelection)
                     {

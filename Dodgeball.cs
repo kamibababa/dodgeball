@@ -64,7 +64,15 @@ namespace Dodgeball
                 if (((GameScreen)activeScreen).RestartLevel)
                     activeScreen = new GameScreen(graphics, Content, ((GameScreen)activeScreen).DayOfWeek);
                 else if (((GameScreen)activeScreen).NextLevel)
-                    activeScreen = new GameScreen(graphics, Content, ((GameScreen)activeScreen).DayOfWeek + 1);
+                {
+                    // Final level
+                    if (((GameScreen)activeScreen).DayOfWeek == World.Day.Fri)
+                        activeScreen = new TitleScreen(graphics, Content);
+                    else
+                        activeScreen = new GameScreen(graphics, Content, ((GameScreen)activeScreen).DayOfWeek + 1);
+                }
+                else if (((GameScreen)activeScreen).GoToLevelSelect)
+                    activeScreen = new LevelSelectScreen(graphics, Content);
             }
         }
 
